@@ -10,12 +10,16 @@ CONFIG += c++11
 
 SOURCES += \
     gui/canvas.cpp \
+    gui/scene.cpp \
     main.cpp \
-    gui/mainwindow.cpp
+    gui/mainwindow.cpp \
+    utils/particle.cpp
 
 HEADERS += \
     gui/canvas.h \
-    gui/mainwindow.h
+    gui/mainwindow.h \
+    gui/scene.h \
+    utils/particle.h
 
 CONFIG += lrelease
 CONFIG += embed_translations

@@ -7,6 +7,7 @@
 #include <QTextEdit>
 
 #include "canvas.h"
+#include "utils/particle.h"
 
 class MainWindow : public QMainWindow
 {
@@ -17,7 +18,8 @@ class MainWindow : public QMainWindow
     QWidget* widget;
     QVBoxLayout *toolsLayout;
     QTextEdit* textEdit;
-
+    Particle* particle;
+    void init();
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();

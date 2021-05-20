@@ -1,29 +1,32 @@
 #include "canvas.h"
 #include <iostream>
-Canvas::Canvas()
+Canvas::Canvas(Particle* part)
+{
+    particle = part;
+    scene = new Scene();
+    timer = new QTimer();
+    init();
+}
+
+void Canvas::init()
 {
     setFixedSize(450, 450);
-    scene = new QGraphicsScene;
     setScene(scene);
-    timer = new QTimer();
-    timer->setSingleShot(true);
+    timer->setSingleShot(false);
     connect(timer, SIGNAL(timeout()), this, SLOT(slotAlarmTimer()));
-    timer->start(1000);
+    timer->start(10);
 }
 
 void Canvas::slotAlarmTimer(){
-    initBackground();
-    scene->addEllipse(10, 10, 10, 10);
+    scene->clear();
+    scene->drawBG();
+    scene->drawParticle(particle);
 }
 
-void Canvas::initBackground(){
-    QPen pen(Qt::black, 3);
-    QBrush brush(Qt::black, Qt::Dense5Pattern);
-    scene->addRect(0, 0, 440, 440, pen, brush);
-}
 
 Canvas::~Canvas()
 {
     delete scene;
     delete timer;
+    delete particle;
 }

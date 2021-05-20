@@ -3,22 +3,22 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {    
-    this->setFixedSize(600, 470);
+    particle = new Particle(10, 10, 1, 2);
     widget = new QWidget();
-    this->setCentralWidget(widget);
-
     mainLayout = new QHBoxLayout();
-    widget->setLayout(mainLayout);
-
-    canvas = new Canvas();
-    mainLayout->addWidget(canvas);
-
+    canvas = new Canvas(particle);
     toolsLayout = new QVBoxLayout();
     textEdit = new QTextEdit();
+    init();
+}
+
+void MainWindow::init(){
+    setFixedSize(600, 470);
+    setCentralWidget(widget);
+    widget->setLayout(mainLayout);
+    mainLayout->addWidget(canvas);
     toolsLayout->addWidget(textEdit);
-
     mainLayout->addLayout(toolsLayout);
-
 }
 
 MainWindow::~MainWindow()
@@ -28,5 +28,6 @@ MainWindow::~MainWindow()
     delete widget;
     delete toolsLayout;
     delete textEdit;
+    delete particle;
 }
 
