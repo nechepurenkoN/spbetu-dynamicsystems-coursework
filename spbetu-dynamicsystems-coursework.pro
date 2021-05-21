@@ -1,3 +1,4 @@
+QT += 3dcore 3drender 3dinput 3dextras
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -9,16 +10,14 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    gui/canvas.cpp \
-    gui/scene.cpp \
+    gui/scenemodifier.cpp \
     main.cpp \
     gui/mainwindow.cpp \
     utils/particle.cpp
 
 HEADERS += \
-    gui/canvas.h \
     gui/mainwindow.h \
-    gui/scene.h \
+    gui/scenemodifier.h \
     utils/particle.h
 
 CONFIG += lrelease

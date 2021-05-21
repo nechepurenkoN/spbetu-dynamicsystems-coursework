@@ -5,18 +5,22 @@
 
 class Particle
 {
-    const int MAX_X = 430;
-    const int MAX_Y = 430;
-    int x;
-    int y;
-    int speed_x;
-    int speed_y;
+    const double MAX_X = 6;
+    const double MAX_Y = 6;
+    const double MAX_Z = 6;
+    double x;
+    double y;
+    double z;
+    double speed_x;
+    double speed_y;
+    double speed_z;
 
 public:
-    Particle(int x, int y, int speed_x, int speed_y);
+    Particle(double x, double y, double z, double speed_x, double speed_y, double speed_z);
     void update();
-    int getX();
-    int getY();
+    double getX();
+    double getY();
+    double getZ();
 };
 
 #endif // PARTICLE_H
