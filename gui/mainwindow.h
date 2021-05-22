@@ -16,7 +16,7 @@
 #include <Qt3DRender/qcamera.h>
 #include <Qt3DRender/qpointlight.h>
 
-#include "utils/particle.h"
+#include "../utils/particle.h"
 
 #include <QSlider>
 

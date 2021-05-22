@@ -9,7 +9,7 @@
 #include <Qt3DExtras/QSphereMesh>
 #include <Qt3DExtras/QPhongMaterial>
 
-#include <utils/particle.h>
+#include "../utils/particle.h"
 
 #include <QTimer>
 
