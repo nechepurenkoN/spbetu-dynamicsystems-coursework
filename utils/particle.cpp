@@ -43,3 +43,25 @@ double Particle::getZ()
     return z;
 }
 
+Particle::~Particle()
+{
+}
+
+int sign(double val){
+    return (val > 0) ? 1: -1;
+}
+
+void Particle::setXSpeed(int value)
+{
+    speed_x = value / 100.0 * sign(speed_x);
+}
+
+void Particle::setYSpeed(int value)
+{
+    speed_y = value / 100.0 * sign(speed_y);
+}
+
+void Particle::setZSpeed(int value)
+{
+    speed_z = value / 100.0 * sign(speed_z);
+}

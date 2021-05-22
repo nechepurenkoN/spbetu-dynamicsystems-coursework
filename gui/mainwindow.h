@@ -18,12 +18,15 @@
 
 #include "utils/particle.h"
 
+#include <QSlider>
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
     QHBoxLayout* mainLayout;
     QWidget* mainWidget;
+
     Qt3DExtras::Qt3DWindow *view;
     QWidget *container;
     Qt3DCore::QEntity *rootEntity;
@@ -32,8 +35,11 @@ class MainWindow : public QMainWindow
     Qt3DRender::QPointLight *light;
     Qt3DExtras::QFirstPersonCameraController *camController;
     SceneModifier *modifier;
+
     QVBoxLayout *toolsLayout;
-    QTextEdit* textEdit;
+    QSlider *xSpeedSlider;
+    QSlider *ySpeedSlider;
+    QSlider *zSpeedSlider;
     Particle* particle;
     void init();
 public:
