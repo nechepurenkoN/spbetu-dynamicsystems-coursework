@@ -29,7 +29,7 @@ SceneModifier::SceneModifier(Qt3DCore::QEntity *rootEntity, Particle* part)
     sphereEntity->setEnabled(true);
 
     timer->setSingleShot(false);
-    connect(timer, SIGNAL(timeout()), this, SLOT(timerAlarm()));
+    connect(timer, &QTimer::timeout, this, &SceneModifier::timerAlarm);
     timer->start(100);
 
 }
