@@ -5,6 +5,8 @@
 #include <QVBoxLayout>
 #include <QMainWindow>
 #include <QTextEdit>
+#include <QLabel>
+#include <QSlider>
 
 #include <Qt3DExtras/qt3dwindow.h>
 #include <Qt3DExtras/qforwardrenderer.h>
@@ -16,9 +18,13 @@
 #include <Qt3DRender/qcamera.h>
 #include <Qt3DRender/qpointlight.h>
 
+#include <iostream>
+#include <chrono>
+#include <thread>
+
+#include "../utils/solver.h"
 #include "../utils/particle.h"
 
-#include <QSlider>
 
 class MainWindow : public QMainWindow
 {
@@ -42,6 +48,7 @@ class MainWindow : public QMainWindow
     QSlider *zSpeedSlider;
     Particle* particle;
     void init();
+    void updateParticle(Point3D s);
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();

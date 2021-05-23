@@ -13,12 +13,18 @@ SOURCES += \
     gui/scenemodifier.cpp \
     main.cpp \
     gui/mainwindow.cpp \
-    utils/particle.cpp
+    utils/particle.cpp \
+    utils/point3d.cpp \
+    utils/solver.cpp \
+    session/session.cpp
 
 HEADERS += \
     gui/mainwindow.h \
     gui/scenemodifier.h \
-    utils/particle.h
+    utils/particle.h \
+    utils/point3d.h \
+    utils/solver.h \
+    session/session.h
 
 CONFIG += lrelease
 CONFIG += embed_translations

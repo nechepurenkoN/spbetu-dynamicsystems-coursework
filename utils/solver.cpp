@@ -11,6 +11,10 @@ State operator*(double h, State state) {
     return state;
 }
 
+State operator+(const State &lhs, const State &rhs){
+    return State(lhs.coordinate + rhs.coordinate, lhs.velocity + rhs.velocity, lhs.charge);
+}
+
 std::ostream &operator<<(std::ostream &os, const State &state) {
     os << "State coordinate [" << state.coordinate.x << " " << state.coordinate.y << " " << state.coordinate.z << "]" << std::endl;
     return os;
@@ -35,7 +39,8 @@ void EulerSolver::solve(State initialState) {
 }
 
 State EulerSolver::step() {
-    State nextState = h * rhsFunction->apply(previousStates.back());
+    State currentState = previousStates.back();
+    State nextState = currentState + h * rhsFunction->apply(currentState);
     previousStates.pop();
     return nextState;
 }
