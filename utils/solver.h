@@ -8,12 +8,28 @@
 #include <functional>
 #include <queue>
 #include <utility>
+#include <memory>
+#include "point3d.h"
 
 
 class State {
 
 public:
 
+};
+
+class RhsFunction {
+public:
+    virtual State apply(State state) = 0;
+};
+
+class EMFieldMovingFunction : public RhsFunction {
+    double electricFieldValue;
+    double magneticFieldValue;
+    Point3D electricFieldDirection;
+    Point3D magneticFieldDirection;
+public:
+    State apply(State state) override;
 };
 
 class Solver {
@@ -23,8 +39,8 @@ public:
 
 class EulerSolver : public Solver {
     std::queue<State> previousStates;
+    std::shared_ptr<RhsFunction> rhsFunction;
     std::function<void(State)> onUpdateConsumer;
-    std::function<State(State)> rhsFunction;
     double h;
     int maxIterations = 0;
 protected:
@@ -42,13 +58,16 @@ protected:
 
 public:
     EulerSolver(
-            std::function<State(State)> rhsFunction_,
+            std::shared_ptr<RhsFunction> rhsFunction,
             std::function<void(State)> onUpdateConsumer_,
             double h_ = 0.01, int maxIterations_ = 10000);
 
 
     void solve(State initialState) override;
 };
+
+
+
 
 
 #endif //SPBETU_DYNAMICSYSTEMS_COURSEWORK_SOLVER_H
