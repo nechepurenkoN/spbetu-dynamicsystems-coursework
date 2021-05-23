@@ -57,17 +57,17 @@ public:
     virtual void solve(State initialState) = 0;
 };
 
-class EulerSolver : public Solver {
+class AbstractSolver : public Solver {
+protected:
     std::queue<State> previousStates;
     std::shared_ptr<RhsFunction> rhsFunction;
     std::function<void(State)> onUpdateConsumer;
     double h;
     int maxIterations = 0;
-protected:
-    State step();
+    virtual State step() = 0;
 
 public:
-    EulerSolver(
+    AbstractSolver(
             std::shared_ptr<RhsFunction> rhsFunction,
             std::function<void(State)> onUpdateConsumer_,
             double h_ = 0.01, int maxIterations_ = 10000);
@@ -76,5 +76,23 @@ public:
     void solve(State initialState) override;
 };
 
+class EulerSolver : public AbstractSolver {
+protected:
+    State step() override;
+public:
+    EulerSolver(
+            std::shared_ptr<RhsFunction> rhsFunction,
+    std::function<void(State)> onUpdateConsumer_,
+    double h_ = 0.01, int maxIterations_ = 10000);
+};
+
+class RK4Solver : public AbstractSolver {
+protected:
+    State step() override;
+
+public:
+    RK4Solver(const std::shared_ptr<RhsFunction> &rhsFunction, const std::function<void(State)> &onUpdateConsumer,
+              double h, int maxIterations);
+};
 
 #endif //SPBETU_DYNAMICSYSTEMS_COURSEWORK_SOLVER_H

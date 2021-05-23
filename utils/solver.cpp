@@ -11,37 +11,38 @@ State operator*(double h, State state) {
     return state;
 }
 
-State operator+(const State &lhs, const State &rhs){
+State operator+(const State &lhs, const State &rhs) {
     return State(lhs.coordinate + rhs.coordinate, lhs.velocity + rhs.velocity, lhs.charge);
 }
 
 std::ostream &operator<<(std::ostream &os, const State &state) {
-    os << "State coordinate [" << state.coordinate.x << " " << state.coordinate.y << " " << state.coordinate.z << "]" << std::endl;
+    os << "State coordinate [" << state.coordinate.x << " " << state.coordinate.y << " " << state.coordinate.z << "]"
+       << std::endl;
     return os;
 }
 
 
-EulerSolver::EulerSolver(std::shared_ptr<RhsFunction> rhsFunction_,
-                         std::function<void(State)> onUpdateConsumer_,
-                         double h_, int maxIterations_)
+AbstractSolver::AbstractSolver(std::shared_ptr<RhsFunction> rhsFunction_,
+                               std::function<void(State)> onUpdateConsumer_,
+                               double h_, int maxIterations_)
         :
         rhsFunction(rhsFunction_),
         onUpdateConsumer(std::move(onUpdateConsumer_)),
         h(h_),
         maxIterations(maxIterations_) {}
 
-void EulerSolver::solve(State initialState) {
+void AbstractSolver::solve(State initialState) {
     previousStates.push(initialState);
     for (int iteration = 0; iteration < maxIterations; iteration++) {
         onUpdateConsumer(previousStates.back());
         previousStates.push(step());
+        previousStates.pop();
     }
 }
 
 State EulerSolver::step() {
     State currentState = previousStates.back();
     State nextState = currentState + h * rhsFunction->apply(currentState);
-    previousStates.pop();
     return nextState;
 }
 
@@ -78,3 +79,20 @@ void EMFieldMovingFunction::setMagneticFieldDirection(const Point3D &magneticFie
 
 State::State(const Point3D &coordinate, const Point3D &velocity, double charge) : coordinate(coordinate),
                                                                                   velocity(velocity), charge(charge) {}
+
+EulerSolver::EulerSolver(std::shared_ptr<RhsFunction> rhsFunction, std::function<void(State)> onUpdateConsumer_,
+                         double h_, int maxIterations_) : AbstractSolver(rhsFunction, onUpdateConsumer_, h_,
+                                                                         maxIterations_) {}
+
+RK4Solver::RK4Solver(const std::shared_ptr<RhsFunction> &rhsFunction,
+                     const std::function<void(State)> &onUpdateConsumer, double h, int maxIterations) : AbstractSolver(
+        rhsFunction, onUpdateConsumer, h, maxIterations) {}
+
+State RK4Solver::step() {
+    State currentState = previousStates.back();
+    State k1 = rhsFunction->apply(currentState);
+    State k2 = rhsFunction->apply(currentState + h / 2. * k1);
+    State k3 = rhsFunction->apply(currentState + h / 2. * k2);
+    State k4 = rhsFunction->apply(currentState + h * k3);
+    return currentState + h * (1/6. * k1 + 1/3. * k2 + 1/3 * k3 + 1/6. * k4);
+}

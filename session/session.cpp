@@ -8,7 +8,7 @@ void solverRunnable(Particle* particle) {
     auto ptr = std::shared_ptr<RhsFunction>(new EMFieldMovingFunction(
             Point3D(1, 0, 0),
             Point3D(0, 0, 1), 2, 3));
-    auto s = std::shared_ptr<Solver>(new EulerSolver(
+    auto s = std::shared_ptr<Solver>(new RK4Solver(
             ptr,
             [&particle](State state) -> void {
                 std::cout << state << std::endl;
