@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include "scenemodifier.h"
+#include "../session/session.h"
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QMainWindow>
@@ -19,11 +20,7 @@
 #include <Qt3DRender/qpointlight.h>
 
 #include <iostream>
-#include <chrono>
-#include <thread>
 
-#include "../utils/solver.h"
-#include "../utils/particle.h"
 
 
 class MainWindow : public QMainWindow
@@ -47,6 +44,7 @@ class MainWindow : public QMainWindow
     QSlider *ySpeedSlider;
     QSlider *zSpeedSlider;
     Particle* particle;
+    std::thread solverThread;
     void init();
     void updateParticle(Point3D s);
 public:

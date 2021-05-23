@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 
+#include <memory>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -13,20 +14,9 @@ MainWindow::MainWindow(QWidget *parent)
     xSpeedSlider = new QSlider(Qt::Horizontal);
     ySpeedSlider = new QSlider(Qt::Horizontal);
     zSpeedSlider = new QSlider(Qt::Horizontal);
+    auto session = std::make_shared<Session>();
+    solverThread = session->start(particle);
     init();
-    auto ptr = std::shared_ptr<RhsFunction>(new EMFieldMovingFunction(
-            Point3D(1, 0, 0),
-            Point3D(0, 0, 1), 2, 3));
-    auto s = std::shared_ptr<Solver>(new EulerSolver(
-            ptr,
-            [this](State state) -> void {
-                std::cout << state << std::endl;
-                updateParticle(state.coordinate);
-                std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-            }, 0.001, 1000
-    ));
-    State state(Point3D(1,0,0), Point3D(1,1,1), 1);
-    s->solve(state);
 }
 
 void MainWindow::init() {
@@ -87,14 +77,8 @@ void MainWindow::init() {
 
 }
 
-void MainWindow::updateParticle(Point3D s)
-{
-    particle->setX(s.x);
-    particle->setY(s.y);
-    particle->setZ(s.z);
-}
-
 MainWindow::~MainWindow() {
+    solverThread.join();
     delete mainLayout;
     delete mainWidget;
     delete toolsLayout;
