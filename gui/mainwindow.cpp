@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     zSpeedSlider = new QSlider(Qt::Horizontal);
     auto session = std::make_shared<Session>();
     solverThread = session->start(particle);
+
     init();
 }
 

@@ -10,21 +10,33 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    gui/scenemodifier.cpp \
+    gui/plane.cpp \
+    gui/sphere.cpp \
     main.cpp \
     gui/mainwindow.cpp \
+    gui/scenemodifier.cpp \
+    session/session.cpp \
+    solvers/euler.cpp \
+    solvers/rk4.cpp \
+    solvers/solver.cpp \
+    utils/rhsfunction.cpp \
     utils/particle.cpp \
     utils/point3d.cpp \
-    utils/solver.cpp \
-    session/session.cpp
+    utils/state.cpp
 
 HEADERS += \
     gui/mainwindow.h \
+    gui/plane.h \
     gui/scenemodifier.h \
+    gui/sphere.h \
+    gui/sphere.h \
+    session/session.h \
+    solvers/euler.h \
+    solvers/rk4.h \
+    utils/rhsfunction.h \
     utils/particle.h \
     utils/point3d.h \
-    utils/solver.h \
-    session/session.h
+    utils/state.h
 
 CONFIG += lrelease
 CONFIG += embed_translations

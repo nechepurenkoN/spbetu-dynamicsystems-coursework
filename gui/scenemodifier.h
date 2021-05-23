@@ -9,9 +9,12 @@
 #include <Qt3DExtras/QSphereMesh>
 #include <Qt3DExtras/QPhongMaterial>
 
-#include "../utils/particle.h"
-
 #include <QTimer>
+
+#include "../utils/particle.h"
+#include "plane.h"
+#include "sphere.h"
+
 
 class SceneModifier : public QObject
 {
@@ -26,12 +29,9 @@ private slots:
 private:
     QTimer *timer;
     Qt3DCore::QEntity *rootEntity;
-    Qt3DCore::QEntity *sphereEntity;
-    Qt3DCore::QTransform *sphereTransform;
-    Qt3DExtras::QSphereMesh *sphereMesh;
-    Qt3DExtras::QPhongMaterial *sphereMaterial;
-    Particle *particle;
-
+    Sphere* sphere;
+    Plane* plane1;
+    Plane* plane2;
 };
 
 #endif // SCENEMODIFIER_H
