@@ -24,6 +24,9 @@ public:
     double getX();
     double getY();
     double getZ();
+    void setX(double val);
+    void setY(double val);
+    void setZ(double val);
     ~Particle();
 
 public slots:

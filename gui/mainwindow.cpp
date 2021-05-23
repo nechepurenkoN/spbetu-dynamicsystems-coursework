@@ -1,8 +1,5 @@
 #include "mainwindow.h"
-#include "../utils/solver.h"
 
-#include <QLabel>
-#include <iostream>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -22,9 +19,11 @@ MainWindow::MainWindow(QWidget *parent)
             Point3D(0, 0, 1), 2, 3));
     auto s = std::shared_ptr<Solver>(new EulerSolver(
             ptr,
-            [](State state) -> void {
+            [this](State state) -> void {
                 std::cout << state << std::endl;
-            }, 0.001, 10
+                updateParticle(state.coordinate);
+                std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            }, 0.001, 1000
     ));
     State state(Point3D(1,0,0), Point3D(1,1,1), 1);
     s->solve(state);
@@ -86,6 +85,13 @@ void MainWindow::init() {
     modifier = new SceneModifier(rootEntity, particle);
     view->setRootEntity(rootEntity);
 
+}
+
+void MainWindow::updateParticle(Point3D s)
+{
+    particle->setX(s.x);
+    particle->setY(s.y);
+    particle->setZ(s.z);
 }
 
 MainWindow::~MainWindow() {

@@ -19,8 +19,10 @@ public:
     double charge;
 
     State(const Point3D &coordinate, const Point3D &velocity, double charge);
+
 };
 
+State operator+(const State &lhs, const State &rhs);
 std::ostream &operator<<(std::ostream &os, const State &state);
 
 class RhsFunction {
