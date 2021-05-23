@@ -1,51 +1,24 @@
 #include "scenemodifier.h"
 
-#include <QtCore/QDebug>
-
-SceneModifier::SceneModifier(Qt3DCore::QEntity *rootEntity, Particle* part)
-    : timer(new QTimer), rootEntity(rootEntity), particle(part)
+SceneModifier::SceneModifier(Qt3DCore::QEntity *rootEntity, Particle* particle)
+    : timer(new QTimer), rootEntity(rootEntity)
 {
-    // Sphere shape data
-    sphereMesh = new Qt3DExtras::QSphereMesh();
-    sphereMesh->setRings(10);
-    sphereMesh->setSlices(10);
-    sphereMesh->setRadius(2);
-
-    // Sphere mesh transform
-    sphereTransform = new Qt3DCore::QTransform();
-
-    sphereTransform->setScale(0.2f);
-    sphereTransform->setTranslation(QVector3D(particle->getX(), particle->getY(), particle->getZ()));
-
-    sphereMaterial = new Qt3DExtras::QPhongMaterial();
-    sphereMaterial->setDiffuse(QColor(QRgb(0xff0000)));
-
-    // Sphere
-    sphereEntity = new Qt3DCore::QEntity(rootEntity);
-    sphereEntity->addComponent(sphereMesh);
-    sphereEntity->addComponent(sphereMaterial);
-    sphereEntity->addComponent(sphereTransform);
-
-    sphereEntity->setEnabled(true);
-
+    sphere = new Sphere(rootEntity, particle);
+    plane1 = new Plane(rootEntity, -1, 0, 0, 45);
+    plane2 = new Plane(rootEntity, 1, 0, 0, 180-45);
     timer->setSingleShot(false);
     connect(timer, &QTimer::timeout, this, &SceneModifier::timerAlarm);
     timer->start(100);
+}
 
+void SceneModifier::timerAlarm(){
+    sphere->update();
 }
 
 SceneModifier::~SceneModifier()
 {
     delete rootEntity;
-    delete sphereEntity;
-    delete sphereMesh;
-    delete sphereMaterial;
-    delete sphereTransform;
-    delete particle;
-}
-
-void SceneModifier::timerAlarm()
-{
-    particle->update();
-    sphereTransform->setTranslation(QVector3D(particle->getX(), particle->getY(), particle->getZ()));
+    delete sphere;
+    delete plane1;
+    delete plane2;
 }
