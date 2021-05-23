@@ -8,7 +8,8 @@
 #include <thread>
 #include <iostream>
 
-#include "../utils/solver.h"
+#include "../utils/point3d.h"
+#include "../utils/state.h"
 #include "../utils/particle.h"
 
 class Session {

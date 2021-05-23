@@ -46,7 +46,6 @@ class MainWindow : public QMainWindow
     Particle* particle;
     std::thread solverThread;
     void init();
-    void updateParticle(Point3D s);
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();

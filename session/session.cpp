@@ -3,6 +3,9 @@
 //
 
 #include "session.h"
+#include "../solvers/solver.h"
+#include "../solvers/rk4.h"
+
 
 void solverRunnable(Particle* particle) {
     auto ptr = std::shared_ptr<RhsFunction>(new EMFieldMovingFunction(
