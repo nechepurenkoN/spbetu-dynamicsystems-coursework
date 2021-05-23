@@ -12,7 +12,7 @@ double operator*(const Point3D &lhs, const Point3D &rhs) {
     return lhs.x*rhs.x + lhs.y*rhs.y + lhs.z*rhs.z;
 }
 
-Point3D operator*(const double &scalar, const Point3D &rhs) {
+Point3D operator*(double scalar, const Point3D &rhs) {
     return Point3D(scalar * rhs.x, scalar * rhs.y, scalar * rhs.z);
 }
 

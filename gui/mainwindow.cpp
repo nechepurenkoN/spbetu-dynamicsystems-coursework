@@ -1,11 +1,12 @@
 #include "mainwindow.h"
+#include "../utils/solver.h"
 
 #include <QLabel>
+#include <iostream>
 
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-{    
+        : QMainWindow(parent) {
     particle = new Particle(0, 0, 0, 0, 0, 0);
     mainWidget = new QWidget();
     mainLayout = new QHBoxLayout();
@@ -16,9 +17,20 @@ MainWindow::MainWindow(QWidget *parent)
     ySpeedSlider = new QSlider(Qt::Horizontal);
     zSpeedSlider = new QSlider(Qt::Horizontal);
     init();
+    auto ptr = std::shared_ptr<RhsFunction>(new EMFieldMovingFunction(
+            Point3D(1, 0, 0),
+            Point3D(0, 0, 1), 2, 3));
+    auto s = std::shared_ptr<Solver>(new EulerSolver(
+            ptr,
+            [](State state) -> void {
+                std::cout << state << std::endl;
+            }, 0.001, 10
+    ));
+    State state(Point3D(1,0,0), Point3D(1,1,1), 1);
+    s->solve(state);
 }
 
-void MainWindow::init(){
+void MainWindow::init() {
     setFixedSize(600, 470);
     container->setFixedSize(450, 450);
     setCentralWidget(mainWidget);
@@ -32,9 +44,9 @@ void MainWindow::init(){
     ySpeedSlider->setRange(0, 300);
     zSpeedSlider->setRange(0, 300);
 
-    xSpeedSlider->setValue(particle->getX()*100);
-    ySpeedSlider->setValue(particle->getY()*100);
-    zSpeedSlider->setValue(particle->getZ()*100);
+    xSpeedSlider->setValue(particle->getX() * 100);
+    ySpeedSlider->setValue(particle->getY() * 100);
+    zSpeedSlider->setValue(particle->getZ() * 100);
 
     toolsLayout->addWidget(new QLabel("X"));
     toolsLayout->addWidget(xSpeedSlider);
@@ -52,7 +64,7 @@ void MainWindow::init(){
     // Camera
     cameraEntity = view->camera();
 
-    cameraEntity->lens()->setPerspectiveProjection(45.0f, 16.0f/9.0f, 0.1f, 1000.0f);
+    cameraEntity->lens()->setPerspectiveProjection(45.0f, 16.0f / 9.0f, 0.1f, 1000.0f);
     cameraEntity->setPosition(QVector3D(0, 0, 20.0f));
     cameraEntity->setUpVector(QVector3D(0, 1, 0));
     cameraEntity->setViewCenter(QVector3D(0, 0, 0));
@@ -76,8 +88,7 @@ void MainWindow::init(){
 
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete mainLayout;
     delete mainWidget;
     delete toolsLayout;

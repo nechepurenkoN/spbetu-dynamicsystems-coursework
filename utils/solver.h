@@ -13,10 +13,15 @@
 
 
 class State {
-
 public:
+    Point3D coordinate;
+    Point3D velocity;
+    double charge;
 
+    State(const Point3D &coordinate, const Point3D &velocity, double charge);
 };
+
+std::ostream &operator<<(std::ostream &os, const State &state);
 
 class RhsFunction {
 public:
@@ -25,11 +30,24 @@ public:
 
 class EMFieldMovingFunction : public RhsFunction {
     double electricFieldValue;
+
+private:
     double magneticFieldValue;
     Point3D electricFieldDirection;
     Point3D magneticFieldDirection;
 public:
+    EMFieldMovingFunction(const Point3D &electricFieldDirection, const Point3D &magneticFieldDirection,
+                          double electricFieldValue, double magneticFieldValue);
+
     State apply(State state) override;
+
+    void setElectricFieldValue(double electricFieldValue);
+
+    void setMagneticFieldValue(double magneticFieldValue);
+
+    void setElectricFieldDirection(const Point3D &electricFieldDirection);
+
+    void setMagneticFieldDirection(const Point3D &magneticFieldDirection);
 };
 
 class Solver {
@@ -46,16 +64,6 @@ class EulerSolver : public Solver {
 protected:
     State step();
 
-//    EulerSolver(const EulerSolver &es) {
-//        if (&es != this) {
-//            previousStates = es.previousStates;
-//            onUpdateConsumer = es.onUpdateConsumer;
-//            rhsFunction = es.rhsFunction;
-//            h = es.h;
-//            maxIterations = es.maxIterations;
-//        }
-//    }
-
 public:
     EulerSolver(
             std::shared_ptr<RhsFunction> rhsFunction,
@@ -65,9 +73,6 @@ public:
 
     void solve(State initialState) override;
 };
-
-
-
 
 
 #endif //SPBETU_DYNAMICSYSTEMS_COURSEWORK_SOLVER_H
