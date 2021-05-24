@@ -5,9 +5,9 @@
 #include <QObject>
 #include <QPhongMaterial>
 #include <QSphereMesh>
-#include <QTransform>
+#include <Qt3DCore/qtransform.h>
 
-#include "utils/particle.h"
+#include "../utils/particle.h"
 
 
 

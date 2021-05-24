@@ -5,7 +5,7 @@
 #include <QObject>
 #include <QPhongMaterial>
 #include <QPlaneMesh>
-#include <QTransform>
+#include <Qt3DCore/qtransform.h>
 
 
 
