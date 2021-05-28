@@ -16,6 +16,11 @@ Point3D operator*(double scalar, const Point3D &rhs) {
     return Point3D(scalar * rhs.x, scalar * rhs.y, scalar * rhs.z);
 }
 
+std::ostream &operator<<(std::ostream &os, const Point3D &point) {
+    os << "[" << point.x << " " << point.y << " " << point.z << "]";
+    return os;
+}
+
 Point3D Point3D::cross(const Point3D &rhs) {
     return Point3D(y*rhs.z - z*rhs.y, z*rhs.x - x*rhs.z, x*rhs.y-y*rhs.x);
 }

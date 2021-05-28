@@ -18,7 +18,7 @@ State operator+(const State &lhs, const State &rhs) {
 }
 
 std::ostream &operator<<(std::ostream &os, const State &state) {
-    os << "State coordinate [" << state.coordinate.x << " " << state.coordinate.y << " " << state.coordinate.z << "]"
-       << std::endl;
+    os << "State coordinate " << state.coordinate  << std::endl;
+    os << "State velocity " << state.velocity << std::endl;
     return os;
 }

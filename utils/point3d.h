@@ -5,6 +5,7 @@
 #ifndef SPBETU_DYNAMICSYSTEMS_COURSEWORK_POINT3D_H
 #define SPBETU_DYNAMICSYSTEMS_COURSEWORK_POINT3D_H
 
+#include <iostream>
 
 class Point3D {
 public:
@@ -19,5 +20,6 @@ public:
 Point3D operator*(double scalar, const Point3D &rhs);
 double operator*(const Point3D &lhs, const Point3D &rhs);
 Point3D operator+(const Point3D &lhs, const Point3D &rhs);
+std::ostream &operator<<(std::ostream &os, const Point3D &point);
 
 #endif //SPBETU_DYNAMICSYSTEMS_COURSEWORK_POINT3D_H
