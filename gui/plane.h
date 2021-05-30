@@ -13,7 +13,7 @@ class Plane: public QObject
 {
     Q_OBJECT
 public:
-    Plane(Qt3DCore::QEntity* rootEntity, double x, double y, double z, double angle);
+    Plane(Qt3DCore::QEntity* rootEntity, double x, double y, double z);
     ~Plane();
 private:
     Qt3DExtras::QPlaneMesh* mesh;

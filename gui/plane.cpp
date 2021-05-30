@@ -1,17 +1,19 @@
 #include "plane.h"
 
-Plane::Plane(Qt3DCore::QEntity* rootEntity, double x, double y, double z, double angle)
+Plane::Plane(Qt3DCore::QEntity* rootEntity, double x, double y, double z)
 {
     mesh = new Qt3DExtras::QPlaneMesh();
     mesh->setWidth(2);
     mesh->setHeight(2);
     transform_front = new Qt3DCore::QTransform();
     transform_front->setScale(10.0f);
-    transform_front->setRotation(QQuaternion::fromAxisAndAngle(QVector3D(x, y, z), angle));
+//    transform_front->setRotation(QQuaternion::fromAxisAndAngle(QVector3D(x, y, z), angle));
+
+    transform_front->setRotation(QQuaternion::rotationTo(QVector3D(0, 1, 0), QVector3D(x, y, z)));
 
     transform_back = new Qt3DCore::QTransform();
     transform_back->setScale(10.0f);
-    transform_back->setRotation(QQuaternion::fromAxisAndAngle(QVector3D(-x, -y, -z), 180 - angle));
+    transform_back->setRotation(QQuaternion::rotationTo(QVector3D(0, 1, 0) ,QVector3D(-x, -y, -z)));
 
     material = new Qt3DExtras::QPhongAlphaMaterial();
     material->setDiffuse(QColor(QRgb(0x0000ff)));

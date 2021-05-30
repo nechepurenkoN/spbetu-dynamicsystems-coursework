@@ -8,7 +8,7 @@
 #include <QTextEdit>
 #include <QLabel>
 #include <QSlider>
-
+#include <QCloseEvent>
 #include <Qt3DExtras/qt3dwindow.h>
 #include <Qt3DExtras/qforwardrenderer.h>
 #include <Qt3DExtras/qfirstpersoncameracontroller.h>
@@ -48,9 +48,7 @@ class MainWindow : public QMainWindow
     Session session;
     void init();
 
-private slots:
-    void stopCalculations();
-
+    void closeEvent(QCloseEvent* event);
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();

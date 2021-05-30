@@ -14,11 +14,11 @@ void solverRunnable(Particle *particle) {
     auto s = std::shared_ptr<Solver>(new EulerSolver(
             ptr,
             [&particle](State state) -> void {
-//                std::cout << state << std::endl;
+                std::cout << state << std::endl;
                 particle->setX(state.coordinate.x);
                 particle->setY(state.coordinate.y);
                 particle->setZ(state.coordinate.z);
-                std::this_thread::sleep_for(std::chrono::milliseconds(55));
+                std::this_thread::sleep_for(std::chrono::milliseconds(300));
             }, 0.01, 10000
     ));
     State state(Point3D(0, 0, 0), Point3D(0, 0, 0), 1);
