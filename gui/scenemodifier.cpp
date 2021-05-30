@@ -8,7 +8,7 @@ SceneModifier::SceneModifier(Qt3DCore::QEntity *rootEntity, Particle* particle, 
     mPlane = new Plane(rootEntity, mfc, 0x0000ff);
     timer->setSingleShot(false);
     connect(timer, &QTimer::timeout, this, &SceneModifier::timerAlarm);
-    timer->start(100);
+    timer->start(10);
 }
 
 void SceneModifier::timerAlarm(){
