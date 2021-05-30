@@ -17,9 +17,11 @@ public:
     ~Plane();
 private:
     Qt3DExtras::QPlaneMesh* mesh;
-    Qt3DCore::QTransform* transform;
+    Qt3DCore::QTransform* transform_front;
+    Qt3DCore::QTransform* transform_back;
     Qt3DExtras::QPhongMaterial* material;
-    Qt3DCore::QEntity* entity;
+    Qt3DCore::QEntity* entity_front;
+    Qt3DCore::QEntity* entity_back;
 };
 
 #endif // PLANE_H
