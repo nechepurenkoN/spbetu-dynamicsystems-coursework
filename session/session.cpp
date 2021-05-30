@@ -3,14 +3,8 @@
 //
 
 #include "session.h"
-#include "../solvers/solver.h"
-#include "../solvers/rk4.h"
-#include "../solvers/euler.h"
 
-void solverRunnable(Particle *particle) {
-    auto ptr = std::shared_ptr<RhsFunction>(new EMFieldMovingFunction(
-            Point3D(0, 0, 1),
-            Point3D(0, 1, 0), 2, 3));
+void solverRunnable(Particle *particle, std::shared_ptr<RhsFunction> ptr) {
     auto s = std::shared_ptr<Solver>(new EulerSolver(
             ptr,
             [&particle](State state) -> void {
@@ -20,12 +14,12 @@ void solverRunnable(Particle *particle) {
                 std::this_thread::sleep_for(std::chrono::milliseconds(50));
             }, 0.01, 10000
     ));
-    State state(Point3D(0, 0, 0), Point3D(0, 0, 0), 1);
+    State state(Point3D(particle->getX(), particle->getY(), particle->getZ()), Point3D(0, 0, 0), 1);
     s->solve(state);
 }
 
-void Session::start(Particle *particle) {
-    solverThread = std::thread(solverRunnable, particle);
+void Session::start(Particle *particle, std::shared_ptr<RhsFunction> ptr) {
+    solverThread = std::thread(solverRunnable, particle, ptr);
 }
 
 void Session::stop() {

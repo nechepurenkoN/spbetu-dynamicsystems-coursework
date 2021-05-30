@@ -1,10 +1,11 @@
 #include "scenemodifier.h"
 
-SceneModifier::SceneModifier(Qt3DCore::QEntity *rootEntity, Particle* particle)
+SceneModifier::SceneModifier(Qt3DCore::QEntity *rootEntity, Particle* particle, QVector3D efc, QVector3D mfc)
     : timer(new QTimer), rootEntity(rootEntity)
 {
     sphere = new Sphere(rootEntity, particle);
-    plane = new Plane(rootEntity, 1, 0, 0);
+    ePlane = new Plane(rootEntity, efc, 0x00ff00);
+    mPlane = new Plane(rootEntity, mfc, 0x0000ff);
     timer->setSingleShot(false);
     connect(timer, &QTimer::timeout, this, &SceneModifier::timerAlarm);
     timer->start(100);
@@ -18,5 +19,6 @@ SceneModifier::~SceneModifier()
 {
     delete rootEntity;
     delete sphere;
-    delete plane;
+    delete ePlane;
+    delete mPlane;
 }

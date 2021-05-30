@@ -34,6 +34,7 @@ HEADERS += \
     session/session.h \
     solvers/euler.h \
     solvers/rk4.h \
+    solvers/solver.h \
     utils/rhsfunction.h \
     utils/particle.h \
     utils/point3d.h \

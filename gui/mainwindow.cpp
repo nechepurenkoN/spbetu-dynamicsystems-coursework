@@ -6,6 +6,11 @@
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent) {
     particle = new Particle(0, 0, 0, 0, 0, 0);
+    eFieldCoord = QVector3D(1, 0, 0);
+    mFieldCoord = QVector3D(0, 0.1, 1);
+    rhs = std::shared_ptr<RhsFunction>(new EMFieldMovingFunction(
+            Point3D(eFieldCoord.x(), eFieldCoord.y(), eFieldCoord.z()),
+            Point3D(mFieldCoord.x(), mFieldCoord.y(), mFieldCoord.z()), 2, 3));
     mainWidget = new QWidget();
     mainLayout = new QHBoxLayout();
     toolsLayout = new QVBoxLayout();
@@ -15,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
     ySpeedSlider = new QSlider(Qt::Horizontal);
     zSpeedSlider = new QSlider(Qt::Horizontal);
     session = Session();
-    session.start(particle);
+    session.start(particle, rhs);
 
     init();
 }
@@ -24,7 +29,7 @@ void MainWindow::init() {
     setFixedSize(600, 470);
     container->setFixedSize(450, 450);
     setCentralWidget(mainWidget);
-    view->defaultFrameGraph()->setClearColor(QColor(QRgb(0x4d4d4f)));
+    view->defaultFrameGraph()->setClearColor(QColor(QRgb(0xaaaaaa)));
     mainWidget->setLayout(mainLayout);
     mainLayout->addWidget(container);
     mainLayout->addLayout(toolsLayout);
@@ -38,12 +43,12 @@ void MainWindow::init() {
     ySpeedSlider->setValue(particle->getY() * 100);
     zSpeedSlider->setValue(particle->getZ() * 100);
 
-    toolsLayout->addWidget(new QLabel("X"));
-    toolsLayout->addWidget(xSpeedSlider);
-    toolsLayout->addWidget(new QLabel("Y"));
-    toolsLayout->addWidget(ySpeedSlider);
-    toolsLayout->addWidget(new QLabel("Z"));
-    toolsLayout->addWidget(zSpeedSlider);
+//    toolsLayout->addWidget(new QLabel("X"));
+//    toolsLayout->addWidget(xSpeedSlider);
+//    toolsLayout->addWidget(new QLabel("Y"));
+//    toolsLayout->addWidget(ySpeedSlider);
+//    toolsLayout->addWidget(new QLabel("Z"));
+//    toolsLayout->addWidget(zSpeedSlider);
 
     connect(xSpeedSlider, &QSlider::valueChanged, particle, &Particle::setXSpeed);
     connect(ySpeedSlider, &QSlider::valueChanged, particle, &Particle::setYSpeed);
@@ -55,7 +60,7 @@ void MainWindow::init() {
     cameraEntity = view->camera();
 
     cameraEntity->lens()->setPerspectiveProjection(45.0f, 16.0f / 9.0f, 0.1f, 1000.0f);
-    cameraEntity->setPosition(QVector3D(0, 0, 20.0f));
+    cameraEntity->setPosition(QVector3D(11.0f, 5.0f, 20.0f));
     cameraEntity->setUpVector(QVector3D(0, 1, 0));
     cameraEntity->setViewCenter(QVector3D(0, 0, 0));
 
@@ -65,7 +70,7 @@ void MainWindow::init() {
     light->setIntensity(1);
     lightEntity->addComponent(light);
     Qt3DCore::QTransform *lightTransform = new Qt3DCore::QTransform(lightEntity);
-    lightTransform->setTranslation(cameraEntity->position());
+    lightTransform->setTranslation(QVector3D(20.0f, 20.0f, 20.0f));
     lightEntity->addComponent(lightTransform);
 
     // For camera controls
@@ -73,7 +78,7 @@ void MainWindow::init() {
     camController->setCamera(cameraEntity);
 
     // Scenemodifier
-    modifier = new SceneModifier(rootEntity, particle);
+    modifier = new SceneModifier(rootEntity, particle, eFieldCoord, mFieldCoord);
     view->setRootEntity(rootEntity);
 }
 
