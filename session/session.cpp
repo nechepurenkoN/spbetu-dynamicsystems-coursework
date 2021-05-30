@@ -14,7 +14,7 @@ void solverRunnable(Particle* particle) {
     auto s = std::shared_ptr<Solver>(new EulerSolver(
             ptr,
             [&particle](State state) -> void {
-                std::cout << state << std::endl;
+//                std::cout << state << std::endl;
                 particle->setX(state.coordinate.x);
                 particle->setY(state.coordinate.y);
                 particle->setZ(state.coordinate.z);

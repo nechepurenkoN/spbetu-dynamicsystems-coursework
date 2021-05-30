@@ -46,6 +46,10 @@ class MainWindow : public QMainWindow
     Particle* particle;
     std::thread solverThread;
     void init();
+
+private slots:
+    void stopCalculations();
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();

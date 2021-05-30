@@ -3,7 +3,7 @@
 
 #include <QEntity>
 #include <QObject>
-#include <QPhongMaterial>
+#include <QPhongAlphaMaterial>
 #include <QPlaneMesh>
 #include <Qt3DCore/qtransform.h>
 
@@ -19,7 +19,7 @@ private:
     Qt3DExtras::QPlaneMesh* mesh;
     Qt3DCore::QTransform* transform_front;
     Qt3DCore::QTransform* transform_back;
-    Qt3DExtras::QPhongMaterial* material;
+    Qt3DExtras::QPhongAlphaMaterial* material;
     Qt3DCore::QEntity* entity_front;
     Qt3DCore::QEntity* entity_back;
 };

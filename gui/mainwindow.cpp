@@ -75,7 +75,6 @@ void MainWindow::init() {
     // Scenemodifier
     modifier = new SceneModifier(rootEntity, particle);
     view->setRootEntity(rootEntity);
-
 }
 
 MainWindow::~MainWindow() {
