@@ -20,6 +20,7 @@
 #include <Qt3DRender/qpointlight.h>
 
 #include <iostream>
+#include "../session/session.h"
 
 
 
@@ -44,7 +45,7 @@ class MainWindow : public QMainWindow
     QSlider *ySpeedSlider;
     QSlider *zSpeedSlider;
     Particle* particle;
-    std::thread solverThread;
+    Session session;
     void init();
 
 private slots:

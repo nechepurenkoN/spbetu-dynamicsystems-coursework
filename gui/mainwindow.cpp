@@ -14,10 +14,12 @@ MainWindow::MainWindow(QWidget *parent)
     xSpeedSlider = new QSlider(Qt::Horizontal);
     ySpeedSlider = new QSlider(Qt::Horizontal);
     zSpeedSlider = new QSlider(Qt::Horizontal);
-    auto session = std::make_shared<Session>();
-    solverThread = session->start(particle);
+    Session session;
+    session.start(particle);
 
     init();
+    std::cout << "terminating solver thread" << std::endl;
+    session.stop();
 }
 
 void MainWindow::init() {
@@ -78,7 +80,6 @@ void MainWindow::init() {
 }
 
 MainWindow::~MainWindow() {
-    solverThread.join();
     delete mainLayout;
     delete mainWidget;
     delete toolsLayout;

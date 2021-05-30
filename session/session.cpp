@@ -7,7 +7,7 @@
 #include "../solvers/rk4.h"
 #include "../solvers/euler.h"
 
-void solverRunnable(Particle* particle) {
+void solverRunnable(Particle *particle) {
     auto ptr = std::shared_ptr<RhsFunction>(new EMFieldMovingFunction(
             Point3D(0, 0, 1),
             Point3D(0, 1, 0), 2, 3));
@@ -21,12 +21,17 @@ void solverRunnable(Particle* particle) {
                 std::this_thread::sleep_for(std::chrono::milliseconds(55));
             }, 0.01, 10000
     ));
-    State state(Point3D(0,0,0), Point3D(0,0,0), 1);
+    State state(Point3D(0, 0, 0), Point3D(0, 0, 0), 1);
     s->solve(state);
 }
 
-std::thread Session::start(Particle* particle) {
-    std::thread solvingThread(solverRunnable, particle);
-    return solvingThread;
+void Session::start(Particle *particle) {
+    solverThread = std::thread(solverRunnable, particle);
+}
+
+void Session::stop() {
+    if (solverThread.native_handle())
+        pthread_cancel(solverThread.native_handle());
+    solverThread.join();
 }
 
