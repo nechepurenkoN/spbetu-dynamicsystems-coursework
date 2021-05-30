@@ -13,8 +13,11 @@
 #include "../utils/particle.h"
 
 class Session {
+    std::thread solverThread;
 public:
-    std::thread start(Particle*);
+    void start(Particle*);
+
+    void stop();
 };
 
 

@@ -35,6 +35,7 @@ void test_point_crossing() {
 void Runner::run() {
     test_point_addition();
     test_point_crossing();
+    std::cout << "All tests passed" << std::endl;
 }
 
 
