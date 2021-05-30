@@ -11,7 +11,7 @@ void solverRunnable(Particle *particle, std::shared_ptr<RhsFunction> ptr) {
                 particle->setX(state.coordinate.x);
                 particle->setY(state.coordinate.y);
                 particle->setZ(state.coordinate.z);
-                std::this_thread::sleep_for(std::chrono::milliseconds(50));
+                std::this_thread::sleep_for(std::chrono::milliseconds(10));
             }, 0.01, 10000
     ));
     State state(Point3D(particle->getX(), particle->getY(), particle->getZ()), Point3D(0, 0, 0), 1);
