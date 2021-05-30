@@ -20,6 +20,8 @@
 #include <Qt3DRender/qpointlight.h>
 
 #include <iostream>
+
+#include "../utils/rhsfunction.h"
 #include "../session/session.h"
 
 
@@ -45,6 +47,9 @@ class MainWindow : public QMainWindow
     QSlider *ySpeedSlider;
     QSlider *zSpeedSlider;
     Particle* particle;
+    QVector3D eFieldCoord;
+    QVector3D mFieldCoord;
+    std::shared_ptr<RhsFunction> rhs;
     Session session;
     void init();
 

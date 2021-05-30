@@ -11,11 +11,14 @@
 #include "../utils/point3d.h"
 #include "../utils/state.h"
 #include "../utils/particle.h"
+#include "../solvers/solver.h"
+#include "../solvers/rk4.h"
+#include "../solvers/euler.h"
 
 class Session {
     std::thread solverThread;
 public:
-    void start(Particle*);
+    void start(Particle*, std::shared_ptr<RhsFunction>);
 
     void stop();
 };

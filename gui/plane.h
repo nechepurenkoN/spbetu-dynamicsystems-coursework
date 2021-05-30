@@ -13,7 +13,8 @@ class Plane: public QObject
 {
     Q_OBJECT
 public:
-    Plane(Qt3DCore::QEntity* rootEntity, double x, double y, double z);
+    Plane(Qt3DCore::QEntity* rootEntity, QVector3D coords, int color);
+    Plane(Qt3DCore::QEntity* rootEntity, double x, double y, double z, int color);
     ~Plane();
 private:
     Qt3DExtras::QPlaneMesh* mesh;
