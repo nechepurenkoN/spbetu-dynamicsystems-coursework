@@ -4,10 +4,10 @@
 
 #include "rhsfunction.h"
 State EMFieldMovingFunction::apply(State state) {
-    state.velocity = state.charge * (electricFieldValue * electricFieldDirection +
-                                     magneticFieldValue * state.velocity.cross(magneticFieldDirection));
-    state.coordinate = state.coordinate + state.velocity;
-    return state;
+    Point3D dVelocity = electricFieldValue * electricFieldDirection +
+                                     magneticFieldValue * state.velocity.cross(magneticFieldDirection);
+    state.coordinate = state.velocity + dVelocity;
+    return State(state.coordinate, dVelocity, state.charge);
 }
 
 EMFieldMovingFunction::EMFieldMovingFunction(const Point3D &electricFieldDirection_,
