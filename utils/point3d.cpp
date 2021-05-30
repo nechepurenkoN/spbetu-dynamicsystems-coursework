@@ -3,13 +3,14 @@
 //
 
 #include "point3d.h"
+#include <stdlib.h>
 
 Point3D operator+(const Point3D &lhs, const Point3D &rhs) {
     return Point3D(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
 }
 
 double operator*(const Point3D &lhs, const Point3D &rhs) {
-    return lhs.x*rhs.x + lhs.y*rhs.y + lhs.z*rhs.z;
+    return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
 }
 
 Point3D operator*(double scalar, const Point3D &rhs) {
@@ -22,11 +23,17 @@ std::ostream &operator<<(std::ostream &os, const Point3D &point) {
 }
 
 Point3D Point3D::cross(const Point3D &rhs) {
-    return Point3D(y*rhs.z - z*rhs.y, z*rhs.x - x*rhs.z, x*rhs.y-y*rhs.x);
+    return Point3D(y * rhs.z - z * rhs.y, z * rhs.x - x * rhs.z, x * rhs.y - y * rhs.x);
 }
 
 Point3D::Point3D(double x, double y, double z) {
     this->x = x;
     this->y = y;
     this->z = z;
+}
+
+bool operator==(const Point3D &lhs, const Point3D &rhs) {
+    return std::abs(lhs.x - rhs.x) <= 1e-6
+           && std::abs(lhs.y - rhs.y) <= 1e-6
+           && std::abs(lhs.z - rhs.z) <= 1e-6;
 }

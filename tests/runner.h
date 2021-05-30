@@ -1,0 +1,16 @@
+//
+// Created by 79612 on 30.05.2021.
+//
+
+#ifndef SPBETU_DYNAMICSYSTEMS_COURSEWORK_RUNNER_H
+#define SPBETU_DYNAMICSYSTEMS_COURSEWORK_RUNNER_H
+
+
+class Runner {
+
+public:
+    void run();
+};
+
+
+#endif //SPBETU_DYNAMICSYSTEMS_COURSEWORK_RUNNER_H
