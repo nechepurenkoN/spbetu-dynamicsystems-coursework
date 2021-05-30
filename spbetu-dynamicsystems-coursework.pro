@@ -22,7 +22,8 @@ SOURCES += \
     utils/rhsfunction.cpp \
     utils/particle.cpp \
     utils/point3d.cpp \
-    utils/state.cpp
+    utils/state.cpp \
+    tests/runner.cpp
 
 HEADERS += \
     gui/mainwindow.h \
@@ -36,7 +37,8 @@ HEADERS += \
     utils/rhsfunction.h \
     utils/particle.h \
     utils/point3d.h \
-    utils/state.h
+    utils/state.h \
+    tests/runner.h
 
 CONFIG += lrelease
 CONFIG += embed_translations

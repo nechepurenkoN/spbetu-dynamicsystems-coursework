@@ -30,7 +30,7 @@ private:
     QTimer *timer;
     Qt3DCore::QEntity *rootEntity;
     Sphere* sphere;
-    Plane* plane1;
+    Plane* plane;
     Plane* plane2;
 };
 

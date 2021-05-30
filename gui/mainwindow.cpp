@@ -14,12 +14,10 @@ MainWindow::MainWindow(QWidget *parent)
     xSpeedSlider = new QSlider(Qt::Horizontal);
     ySpeedSlider = new QSlider(Qt::Horizontal);
     zSpeedSlider = new QSlider(Qt::Horizontal);
-    Session session;
+    session = Session();
     session.start(particle);
 
     init();
-    std::cout << "terminating solver thread" << std::endl;
-    session.stop();
 }
 
 void MainWindow::init() {
@@ -77,7 +75,12 @@ void MainWindow::init() {
     // Scenemodifier
     modifier = new SceneModifier(rootEntity, particle);
     view->setRootEntity(rootEntity);
+}
 
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    std::cout << "terminating solver thread" << std::endl;
+    session.stop();
 }
 
 MainWindow::~MainWindow() {
