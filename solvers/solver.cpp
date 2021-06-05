@@ -16,7 +16,8 @@ void AbstractSolver::solve(State initialState) {
     previousStates.push(initialState);
     for (int iteration = 0; iteration < maxIterations; iteration++) {
         onUpdateConsumer(previousStates.back());
-        previousStates.push(step());
+        State nextState = step();
+        previousStates.push(nextState);
         previousStates.pop();
     }
 }

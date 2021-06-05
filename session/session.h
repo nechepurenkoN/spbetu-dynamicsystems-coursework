@@ -7,6 +7,7 @@
 #include <chrono>
 #include <thread>
 #include <iostream>
+#include <vector>
 
 #include "../utils/point3d.h"
 #include "../utils/state.h"
@@ -18,7 +19,7 @@
 class Session {
     std::thread solverThread;
 public:
-    void start(Particle*, std::shared_ptr<RhsFunction>);
+    void start(std::vector<Particle*>&, std::shared_ptr<RhsFunction>);
 
     void stop();
 };

@@ -3,12 +3,21 @@
 //
 
 #include "rhsfunction.h"
+
+bool terminatePredicate(Point3D &coord) {
+    return coord.y < -3.;
+}
+
 State EMFieldMovingFunction::apply(State state) {
     Point3D dVelocity = electricFieldValue * electricFieldDirection +
-                                     magneticFieldValue * state.velocity.cross(magneticFieldDirection);
+                        magneticFieldValue * state.velocity.cross(magneticFieldDirection);
+    if (terminatePredicate(state.coordinate))
+        throw 1;
     state.coordinate = state.velocity + dVelocity;
-    return State(state.coordinate, dVelocity, state.charge);
+    State newState(state.coordinate, dVelocity, state.charge);
+    return newState;
 }
+
 
 EMFieldMovingFunction::EMFieldMovingFunction(const Point3D &electricFieldDirection_,
                                              const Point3D &magneticFieldDirection_,

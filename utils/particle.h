@@ -14,13 +14,10 @@ class Particle: public QObject
     double x;
     double y;
     double z;
-    double speed_x;
-    double speed_y;
-    double speed_z;
+
 
 public:
-    Particle(double x, double y, double z, double speed_x, double speed_y, double speed_z);
-    void update();
+    Particle(double x, double y, double z);
     double getX();
     double getY();
     double getZ();
@@ -30,9 +27,7 @@ public:
     ~Particle();
 
 public slots:
-    void setXSpeed(int value);
-    void setYSpeed(int value);
-    void setZSpeed(int value);
+
 };
 
 #endif // PARTICLE_H

@@ -4,8 +4,9 @@
 
 #include "session.h"
 
-void solverRunnable(Particle *particle, std::shared_ptr<RhsFunction> ptr) {
-    auto s = std::shared_ptr<Solver>(new EulerSolver(
+void solverRunnable(std::vector<Particle*> particles, std::shared_ptr<RhsFunction> ptr) {
+    auto particle = particles.back();
+    auto s = std::shared_ptr<Solver>(new RK4Solver(
             ptr,
             [&particle](State state) -> void {
                 particle->setX(state.coordinate.x);
@@ -15,11 +16,13 @@ void solverRunnable(Particle *particle, std::shared_ptr<RhsFunction> ptr) {
             }, 0.01, 10000
     ));
     State state(Point3D(particle->getX(), particle->getY(), particle->getZ()), Point3D(0, 0, 0), 1);
-    s->solve(state);
+    try {
+        s->solve(state);
+    } catch (int &e){}
 }
 
-void Session::start(Particle *particle, std::shared_ptr<RhsFunction> ptr) {
-    solverThread = std::thread(solverRunnable, particle, ptr);
+void Session::start(std::vector<Particle*> &particles, std::shared_ptr<RhsFunction> ptr) {
+    solverThread = std::thread(solverRunnable, particles, ptr);
 }
 
 void Session::stop() {

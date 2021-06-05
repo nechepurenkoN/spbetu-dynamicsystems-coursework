@@ -41,12 +41,8 @@ class MainWindow : public QMainWindow
     Qt3DRender::QPointLight *light;
     Qt3DExtras::QFirstPersonCameraController *camController;
     SceneModifier *modifier;
-
+    std::vector<Particle*> particles;
     QVBoxLayout *toolsLayout;
-    QSlider *xSpeedSlider;
-    QSlider *ySpeedSlider;
-    QSlider *zSpeedSlider;
-    Particle* particle;
     QVector3D eFieldCoord;
     QVector3D mFieldCoord;
     std::shared_ptr<RhsFunction> rhs;
@@ -57,5 +53,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    void generateParticles();
 };
 #endif // MAINWINDOW_H

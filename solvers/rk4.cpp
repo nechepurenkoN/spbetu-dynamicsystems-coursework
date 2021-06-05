@@ -13,5 +13,5 @@ State RK4Solver::step() {
     State k2 = rhsFunction->apply(currentState + h / 2. * k1);
     State k3 = rhsFunction->apply(currentState + h / 2. * k2);
     State k4 = rhsFunction->apply(currentState + h * k3);
-    return currentState + h * (1/6. * k1 + 1/3. * k2 + 1/3 * k3 + 1/6. * k4);
+    return currentState + h * (1/6. * k1 + 1/3. * k2 + 1/3. * k3 + 1/6. * k4);
 }

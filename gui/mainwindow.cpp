@@ -5,7 +5,6 @@
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent) {
-    particle = new Particle(0, 0, 0, 0, 0, 0);
     eFieldCoord = QVector3D(1, 0, 0);
     mFieldCoord = QVector3D(0, 0.1, 1);
     rhs = std::shared_ptr<RhsFunction>(new EMFieldMovingFunction(
@@ -16,13 +15,11 @@ MainWindow::MainWindow(QWidget *parent)
     toolsLayout = new QVBoxLayout();
     view = new Qt3DExtras::Qt3DWindow();
     container = QWidget::createWindowContainer(view);
-    xSpeedSlider = new QSlider(Qt::Horizontal);
-    ySpeedSlider = new QSlider(Qt::Horizontal);
-    zSpeedSlider = new QSlider(Qt::Horizontal);
     session = Session();
-    session.start(particle, rhs);
-
     init();
+    generateParticles();
+    session.start(particles, rhs);
+
 }
 
 void MainWindow::init() {
@@ -35,24 +32,6 @@ void MainWindow::init() {
     mainLayout->addLayout(toolsLayout);
 
     toolsLayout->setAlignment(Qt::AlignTop);
-    xSpeedSlider->setRange(0, 300);
-    ySpeedSlider->setRange(0, 300);
-    zSpeedSlider->setRange(0, 300);
-
-    xSpeedSlider->setValue(particle->getX() * 100);
-    ySpeedSlider->setValue(particle->getY() * 100);
-    zSpeedSlider->setValue(particle->getZ() * 100);
-
-//    toolsLayout->addWidget(new QLabel("X"));
-//    toolsLayout->addWidget(xSpeedSlider);
-//    toolsLayout->addWidget(new QLabel("Y"));
-//    toolsLayout->addWidget(ySpeedSlider);
-//    toolsLayout->addWidget(new QLabel("Z"));
-//    toolsLayout->addWidget(zSpeedSlider);
-
-    connect(xSpeedSlider, &QSlider::valueChanged, particle, &Particle::setXSpeed);
-    connect(ySpeedSlider, &QSlider::valueChanged, particle, &Particle::setYSpeed);
-    connect(zSpeedSlider, &QSlider::valueChanged, particle, &Particle::setZSpeed);
 
     rootEntity = new Qt3DCore::QEntity();
 
@@ -78,7 +57,7 @@ void MainWindow::init() {
     camController->setCamera(cameraEntity);
 
     // Scenemodifier
-    modifier = new SceneModifier(rootEntity, particle, eFieldCoord, mFieldCoord);
+    modifier = new SceneModifier(rootEntity, eFieldCoord, mFieldCoord);
     view->setRootEntity(rootEntity);
 }
 
@@ -92,7 +71,6 @@ MainWindow::~MainWindow() {
     delete mainLayout;
     delete mainWidget;
     delete toolsLayout;
-    delete particle;
     delete view;
     delete container;
     delete rootEntity;
@@ -101,8 +79,17 @@ MainWindow::~MainWindow() {
     delete light;
     delete camController;
     delete modifier;
-    delete xSpeedSlider;
-    delete ySpeedSlider;
-    delete zSpeedSlider;
+    for (auto &particle : particles) {
+        delete particle;
+    }
+}
+
+void MainWindow::generateParticles() {
+    for (int i = 0; i < 3; i++) {
+        auto *p = new Particle(0, 0, 0);
+        auto *s = new Sphere(rootEntity, p);
+        modifier->addSphere(s);
+        particles.push_back(p);
+    }
 }
 

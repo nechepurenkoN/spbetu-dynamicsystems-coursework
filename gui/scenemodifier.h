@@ -21,7 +21,8 @@ class SceneModifier : public QObject
     Q_OBJECT
 
 public:
-    explicit SceneModifier(Qt3DCore::QEntity *rootEntity, Particle* part, QVector3D efc, QVector3D mfc);
+    explicit SceneModifier(Qt3DCore::QEntity *rootEntity, QVector3D efc, QVector3D mfc);
+    void addSphere(Sphere *sphere);
     ~SceneModifier();
 
 private slots:
@@ -29,7 +30,7 @@ private slots:
 private:
     QTimer *timer;
     Qt3DCore::QEntity *rootEntity;
-    Sphere* sphere;
+    std::vector<Sphere*> spheres;
     Plane* ePlane;
     Plane* mPlane;
 };

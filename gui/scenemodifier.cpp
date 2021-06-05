@@ -1,9 +1,8 @@
 #include "scenemodifier.h"
 
-SceneModifier::SceneModifier(Qt3DCore::QEntity *rootEntity, Particle* particle, QVector3D efc, QVector3D mfc)
+SceneModifier::SceneModifier(Qt3DCore::QEntity *rootEntity, QVector3D efc, QVector3D mfc)
     : timer(new QTimer), rootEntity(rootEntity)
 {
-    sphere = new Sphere(rootEntity, particle);
     ePlane = new Plane(rootEntity, efc, 0x00ff00);
     mPlane = new Plane(rootEntity, mfc, 0x0000ff);
     timer->setSingleShot(false);
@@ -12,13 +11,19 @@ SceneModifier::SceneModifier(Qt3DCore::QEntity *rootEntity, Particle* particle, 
 }
 
 void SceneModifier::timerAlarm(){
-    sphere->update();
+    for (auto &sphere: spheres)
+        sphere->update();
+}
+
+void SceneModifier::addSphere(Sphere *sphere) {
+    spheres.push_back(sphere);
 }
 
 SceneModifier::~SceneModifier()
 {
     delete rootEntity;
-    delete sphere;
     delete ePlane;
     delete mPlane;
+    for (auto &sphere: spheres)
+        delete sphere;
 }
