@@ -8,6 +8,10 @@
 #include <thread>
 #include <iostream>
 #include <vector>
+#include <math.h>
+
+#include <QLabel>
+#include <QString>
 
 #include "../utils/point3d.h"
 #include "../utils/state.h"
@@ -20,7 +24,7 @@
 class Session {
     std::thread solverThread;
 public:
-    void start(std::vector<Particle*>&, std::shared_ptr<RhsFunction>);
+    void start(std::vector<Particle*>&, std::shared_ptr<RhsFunction>, QLabel *lb1, QLabel *lb2);
 
     void stop();
 };

@@ -19,6 +19,7 @@
 #include <Qt3DRender/qcamera.h>
 #include <Qt3DRender/qpointlight.h>
 
+#include <QPushButton>
 #include <iostream>
 
 #include "../utils/rhsfunction.h"
@@ -41,7 +42,16 @@ class MainWindow : public QMainWindow
     Qt3DExtras::QFirstPersonCameraController *camController;
     SceneModifier *modifier;
     std::vector<Particle*> particles;
+    QWidget *toolsWidget;
     QVBoxLayout *toolsLayout;
+
+    QLabel *verticalFieldLabel;
+    QLabel *horizontalFieldLabel;
+    QLabel *verticalFieldValue;
+    QLabel *horizontalFieldValue;
+
+    QPushButton* defaultViewButton;
+
     QVector3D eFieldNormal;
     std::vector<UniformField*> mFields;
     QVector3D displayCoord;
@@ -55,5 +65,8 @@ public:
     ~MainWindow();
 
     void generateParticles();
+
+private slots:
+    void setDefaultView();
 };
 #endif // MAINWINDOW_H
