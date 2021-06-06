@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     for (auto field: mFields){
         ptr->addMagneticField(field);
     }
+    displayCoord = QVector3D(10, 0, 0);
     rhs = std::shared_ptr<RhsFunction>(ptr);
     mainWidget = new QWidget();
     mainLayout = new QHBoxLayout();
@@ -65,7 +66,7 @@ void MainWindow::init() {
     for (auto field: mFields){
         mFieldsCoords.push_back(QVector3D(field->direction.x, field->direction.y, field->direction.z));
     }
-    modifier = new SceneModifier(rootEntity, eFieldCoord, mFieldsCoords);
+    modifier = new SceneModifier(rootEntity, eFieldCoord, mFieldsCoords, displayCoord);
     view->setRootEntity(rootEntity);
 }
 

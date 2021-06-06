@@ -16,7 +16,7 @@ public:
     Plane(Qt3DCore::QEntity* rootEntity, QVector3D coords, int color);
     Plane(Qt3DCore::QEntity* rootEntity, double x, double y, double z, int color);
     ~Plane();
-private:
+protected:
     Qt3DExtras::QPlaneMesh* mesh;
     Qt3DCore::QTransform* transform_front;
     Qt3DCore::QTransform* transform_back;
