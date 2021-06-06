@@ -44,7 +44,7 @@ class MainWindow : public QMainWindow
     std::vector<Particle*> particles;
     QVBoxLayout *toolsLayout;
     QVector3D eFieldCoord;
-    QVector3D mFieldCoord;
+    std::vector<UniformField*> mFields;
     std::shared_ptr<RhsFunction> rhs;
     Session session;
     void init();

@@ -16,6 +16,7 @@ SOURCES += \
     gui/mainwindow.cpp \
     gui/scenemodifier.cpp \
     session/session.cpp \
+    solvers/ab3.cpp \
     solvers/euler.cpp \
     solvers/rk4.cpp \
     solvers/solver.cpp \
@@ -32,6 +33,7 @@ HEADERS += \
     gui/sphere.h \
     gui/sphere.h \
     session/session.h \
+    solvers/ab3.h \
     solvers/euler.h \
     solvers/rk4.h \
     solvers/solver.h \
