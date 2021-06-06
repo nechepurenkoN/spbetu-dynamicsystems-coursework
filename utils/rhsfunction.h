@@ -7,6 +7,7 @@
 
 #include "../utils/state.h"
 #include "../utils/point3d.h"
+#include <QVector3D>
 #include <vector>
 
 class RhsFunction {
@@ -27,7 +28,14 @@ class EMFieldMovingFunction : public RhsFunction {
 private:
     std::vector<UniformField *> electricFields;
     std::vector<UniformField *> magneticFields;
+    Point3D displayTranspose;
+    Point3D displayNormal;
+
 public:
+
+    void addDisplay(QVector3D trans, QVector3D normal);
+
+    bool terminatePredicate(Point3D &coord);
 
     State apply(State state) override;
 
