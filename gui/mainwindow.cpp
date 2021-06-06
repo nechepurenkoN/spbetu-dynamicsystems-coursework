@@ -6,10 +6,11 @@
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent) {
     eFieldCoord = QVector3D(1, 0, 0);
-    mFieldCoord = QVector3D(0, 0.1, 1);
+    mFieldCoord = QVector3D(0, 0, 1);
     auto ptr = new EMFieldMovingFunction();
     ptr->addElectricField(new UniformField(2, Point3D(eFieldCoord.x(), eFieldCoord.y(), eFieldCoord.z())));
-    ptr->addMagneticField(new UniformField(3, Point3D(mFieldCoord.x(), mFieldCoord.y(), mFieldCoord.z())));
+    ptr->addMagneticField(new UniformField(0.5, Point3D(mFieldCoord.x(), mFieldCoord.y(), mFieldCoord.z())));
+    ptr->addMagneticField(new UniformField(0.5, Point3D(0, 1, 0)));
     rhs = std::shared_ptr<RhsFunction>(ptr);
     mainWidget = new QWidget();
     mainLayout = new QHBoxLayout();
@@ -24,8 +25,8 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::init() {
-    setFixedSize(600, 470);
-    container->setFixedSize(450, 450);
+    setMinimumSize(600, 470);
+    showMaximized();
     setCentralWidget(mainWidget);
     view->defaultFrameGraph()->setClearColor(QColor(QRgb(0xaaaaaa)));
     mainWidget->setLayout(mainLayout);
