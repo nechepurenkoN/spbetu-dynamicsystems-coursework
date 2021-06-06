@@ -6,7 +6,7 @@
 #define SPBETU_DYNAMICSYSTEMS_COURSEWORK_SOLVER_H
 #include <memory>
 #include <functional>
-#include <queue>
+#include <deque>
 #include "../utils/rhsfunction.h"
 
 class Solver {
@@ -16,7 +16,7 @@ public:
 
 class AbstractSolver : public Solver {
 protected:
-    std::queue<State> previousStates;
+    std::deque<State> previousStates;
     std::shared_ptr<RhsFunction> rhsFunction;
     std::function<void(State)> onUpdateConsumer;
     double h;

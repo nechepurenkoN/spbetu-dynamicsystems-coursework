@@ -13,11 +13,11 @@ AbstractSolver::AbstractSolver(std::shared_ptr<RhsFunction> rhsFunction_,
         maxIterations(maxIterations_) {}
 
 void AbstractSolver::solve(State initialState) {
-    previousStates.push(initialState);
+    previousStates.push_back(initialState);
     for (int iteration = 0; iteration < maxIterations; iteration++) {
         onUpdateConsumer(previousStates.back());
         State nextState = step();
-        previousStates.push(nextState);
-        previousStates.pop();
+        previousStates.push_back(nextState);
+        previousStates.pop_front();
     }
 }

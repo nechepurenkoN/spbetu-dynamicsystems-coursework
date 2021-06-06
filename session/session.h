@@ -15,6 +15,7 @@
 #include "../solvers/solver.h"
 #include "../solvers/rk4.h"
 #include "../solvers/euler.h"
+#include "../solvers/ab3.h"
 
 class Session {
     std::thread solverThread;

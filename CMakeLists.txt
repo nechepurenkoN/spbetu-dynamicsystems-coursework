@@ -28,6 +28,8 @@ add_executable(spbetu_dynamicsystems_coursework
         solvers/euler.h
         solvers/rk4.cpp
         solvers/rk4.h
+        solvers/ab3.cpp
+        solvers/ab3.h
         solvers/solver.cpp
         solvers/solver.h
         utils/particle.cpp
