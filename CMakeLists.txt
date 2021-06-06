@@ -22,6 +22,8 @@ add_executable(spbetu_dynamicsystems_coursework
         gui/plane.h
         gui/sphere.cpp
         gui/sphere.h
+        gui/displaysurface.cpp
+        gui/displaysurface.h
         session/session.cpp
         session/session.h
         solvers/euler.cpp
