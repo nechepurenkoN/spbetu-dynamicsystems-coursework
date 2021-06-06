@@ -10,6 +10,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    gui/displaysurface.cpp \
     gui/plane.cpp \
     gui/sphere.cpp \
     main.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
     tests/runner.cpp
 
 HEADERS += \
+    gui/displaysurface.h \
     gui/mainwindow.h \
     gui/plane.h \
     gui/scenemodifier.h \
