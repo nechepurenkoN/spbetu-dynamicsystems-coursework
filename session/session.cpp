@@ -6,6 +6,7 @@
 
 void solverRunnable(std::vector<Particle*> particles, std::shared_ptr<RhsFunction> ptr) {
     for (auto &particle : particles) {
+        EMFieldMovingFunction *rhs = dynamic_cast<EMFieldMovingFunction *>(ptr.get());
         auto s = std::shared_ptr<Solver>(new RK4Solver(
                 ptr,
                 [&particle](State state) -> void {

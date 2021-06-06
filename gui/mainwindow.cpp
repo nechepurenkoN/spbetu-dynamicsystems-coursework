@@ -7,9 +7,10 @@ MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent) {
     eFieldCoord = QVector3D(1, 0, 0);
     mFieldCoord = QVector3D(0, 0.1, 1);
-    rhs = std::shared_ptr<RhsFunction>(new EMFieldMovingFunction(
-            Point3D(eFieldCoord.x(), eFieldCoord.y(), eFieldCoord.z()),
-            Point3D(mFieldCoord.x(), mFieldCoord.y(), mFieldCoord.z()), 2, 3));
+    auto ptr = new EMFieldMovingFunction();
+    ptr->addElectricField(new UniformField(2, Point3D(eFieldCoord.x(), eFieldCoord.y(), eFieldCoord.z())));
+    ptr->addMagneticField(new UniformField(3, Point3D(mFieldCoord.x(), mFieldCoord.y(), mFieldCoord.z())));
+    rhs = std::shared_ptr<RhsFunction>(ptr);
     mainWidget = new QWidget();
     mainLayout = new QHBoxLayout();
     toolsLayout = new QVBoxLayout();
@@ -61,8 +62,7 @@ void MainWindow::init() {
     view->setRootEntity(rootEntity);
 }
 
-void MainWindow::closeEvent(QCloseEvent *event)
-{
+void MainWindow::closeEvent(QCloseEvent *event) {
     std::cout << "terminating solver thread" << std::endl;
     session.stop();
 }
@@ -85,7 +85,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::generateParticles() {
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 10; i++) {
         auto *p = new Particle(0, 0, 0);
         auto *s = new Sphere(rootEntity, p);
         modifier->addSphere(s);

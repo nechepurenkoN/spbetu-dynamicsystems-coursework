@@ -4,34 +4,42 @@
 
 #ifndef SPBETU_DYNAMICSYSTEMS_COURSEWORK_RHSFUNCTION_H
 #define SPBETU_DYNAMICSYSTEMS_COURSEWORK_RHSFUNCTION_H
+
 #include "../utils/state.h"
 #include "../utils/point3d.h"
-
+#include <vector>
 
 class RhsFunction {
 public:
     virtual State apply(State state) = 0;
 };
 
+class UniformField {
+
+public:
+    double value;
+    Point3D direction;
+
+    UniformField(double value, const Point3D &direction);
+};
+
 class EMFieldMovingFunction : public RhsFunction {
 private:
-    double electricFieldValue;
-    double magneticFieldValue;
-    Point3D electricFieldDirection;
-    Point3D magneticFieldDirection;
+    std::vector<UniformField *> electricFields;
+    std::vector<UniformField *> magneticFields;
 public:
-    EMFieldMovingFunction(const Point3D &electricFieldDirection, const Point3D &magneticFieldDirection,
-                          double electricFieldValue, double magneticFieldValue);
 
     State apply(State state) override;
 
-    void setElectricFieldValue(double electricFieldValue);
+    void addElectricField(UniformField *field);
 
-    void setMagneticFieldValue(double magneticFieldValue);
+    void addMagneticField(UniformField *field);
 
-    void setElectricFieldDirection(const Point3D &electricFieldDirection);
+    std::vector<UniformField *> &getElectricFields();
 
-    void setMagneticFieldDirection(const Point3D &magneticFieldDirection);
+    std::vector<UniformField *> &getMagneticFields();
+
+    ~EMFieldMovingFunction() noexcept;
 };
 
 

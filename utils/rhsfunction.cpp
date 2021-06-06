@@ -5,12 +5,19 @@
 #include "rhsfunction.h"
 
 bool terminatePredicate(Point3D &coord) {
-    return coord.y < -3.;
+    return std::abs(coord.y) > 3.;
 }
 
 State EMFieldMovingFunction::apply(State state) {
-    Point3D dVelocity = electricFieldValue * electricFieldDirection +
-                        magneticFieldValue * state.velocity.cross(magneticFieldDirection);
+    Point3D dVelocity(0,0,0);
+    for (auto &electricField : electricFields) {
+        dVelocity = dVelocity + electricField->value * electricField->direction;
+    }
+
+    for (auto &magneticField : magneticFields) {
+        dVelocity = dVelocity + magneticField->value * state.velocity.cross(magneticField->direction);
+    }
+
     if (terminatePredicate(state.coordinate))
         throw 1;
     state.coordinate = state.velocity + dVelocity;
@@ -19,26 +26,31 @@ State EMFieldMovingFunction::apply(State state) {
 }
 
 
-EMFieldMovingFunction::EMFieldMovingFunction(const Point3D &electricFieldDirection_,
-                                             const Point3D &magneticFieldDirection_,
-                                             double electricFieldValue_, double magneticFieldValue_)
-        : electricFieldValue(electricFieldValue_),
-          magneticFieldValue(magneticFieldValue_),
-          electricFieldDirection(electricFieldDirection_),
-          magneticFieldDirection(magneticFieldDirection_) {}
+UniformField::UniformField(double value, const Point3D &direction)
+        : value(value),
+          direction(direction) {}
 
-void EMFieldMovingFunction::setElectricFieldValue(double electricFieldValue) {
-    this->electricFieldValue = electricFieldValue;
+void EMFieldMovingFunction::addElectricField(UniformField *field) {
+    electricFields.push_back(field);
 }
 
-void EMFieldMovingFunction::setMagneticFieldValue(double magneticFieldValue) {
-    this->magneticFieldValue = magneticFieldValue;
+std::vector<UniformField *> &EMFieldMovingFunction::getElectricFields() {
+    return electricFields;
 }
 
-void EMFieldMovingFunction::setElectricFieldDirection(const Point3D &electricFieldDirection) {
-    this->electricFieldDirection = electricFieldDirection;
+std::vector<UniformField *> &EMFieldMovingFunction::getMagneticFields() {
+    return magneticFields;
 }
 
-void EMFieldMovingFunction::setMagneticFieldDirection(const Point3D &magneticFieldDirection) {
-    this->magneticFieldDirection = magneticFieldDirection;
+void EMFieldMovingFunction::addMagneticField(UniformField *field) {
+    magneticFields.push_back(field);
+}
+
+EMFieldMovingFunction::~EMFieldMovingFunction() noexcept {
+    for (auto &e : electricFields) {
+        delete e;
+    }
+    for (auto &m : magneticFields) {
+        delete m;
+    }
 }
