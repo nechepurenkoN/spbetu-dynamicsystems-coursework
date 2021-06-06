@@ -10,12 +10,14 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    gui/displaysurface.cpp \
     gui/plane.cpp \
     gui/sphere.cpp \
     main.cpp \
     gui/mainwindow.cpp \
     gui/scenemodifier.cpp \
     session/session.cpp \
+    solvers/ab3.cpp \
     solvers/euler.cpp \
     solvers/rk4.cpp \
     solvers/solver.cpp \
@@ -26,12 +28,14 @@ SOURCES += \
     tests/runner.cpp
 
 HEADERS += \
+    gui/displaysurface.h \
     gui/mainwindow.h \
     gui/plane.h \
     gui/scenemodifier.h \
     gui/sphere.h \
     gui/sphere.h \
     session/session.h \
+    solvers/ab3.h \
     solvers/euler.h \
     solvers/rk4.h \
     solvers/solver.h \

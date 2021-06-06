@@ -25,7 +25,6 @@
 #include "../session/session.h"
 
 
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -43,8 +42,9 @@ class MainWindow : public QMainWindow
     SceneModifier *modifier;
     std::vector<Particle*> particles;
     QVBoxLayout *toolsLayout;
-    QVector3D eFieldCoord;
-    QVector3D mFieldCoord;
+    QVector3D eFieldNormal;
+    std::vector<UniformField*> mFields;
+    QVector3D displayCoord;
     std::shared_ptr<RhsFunction> rhs;
     Session session;
     void init();

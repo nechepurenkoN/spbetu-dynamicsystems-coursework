@@ -12,6 +12,7 @@
 #include <QTimer>
 
 #include "../utils/particle.h"
+#include "displaysurface.h"
 #include "plane.h"
 #include "sphere.h"
 
@@ -21,7 +22,7 @@ class SceneModifier : public QObject
     Q_OBJECT
 
 public:
-    explicit SceneModifier(Qt3DCore::QEntity *rootEntity, QVector3D efc, QVector3D mfc);
+    explicit SceneModifier(Qt3DCore::QEntity *rootEntity, QVector3D efc, std::vector<QVector3D> mfc, QVector3D displayCoord);
     void addSphere(Sphere *sphere);
     ~SceneModifier();
 
@@ -32,7 +33,8 @@ private:
     Qt3DCore::QEntity *rootEntity;
     std::vector<Sphere*> spheres;
     Plane* ePlane;
-    Plane* mPlane;
+    std::vector<Plane*> mPlanes;
+    DisplaySurface* display;
 };
 
 #endif // SCENEMODIFIER_H
