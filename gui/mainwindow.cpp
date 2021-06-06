@@ -5,15 +5,16 @@
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent) {
-    eFieldCoord = QVector3D(1, 0, 0);
+    eFieldNormal = QVector3D(1, 0, 0);
     mFields.push_back(new UniformField(1, Point3D(0, 0, 1)));
     mFields.push_back(new UniformField(1, Point3D(0, 1, 0)));
+    displayCoord = QVector3D(10, 0, 0);
     auto ptr = new EMFieldMovingFunction();
-    ptr->addElectricField(new UniformField(0, Point3D(eFieldCoord.x(), eFieldCoord.y(), eFieldCoord.z())));
+    ptr->addElectricField(new UniformField(10, Point3D(eFieldNormal.x(), eFieldNormal.y(), eFieldNormal.z())));
     for (auto field: mFields){
         ptr->addMagneticField(field);
     }
-    displayCoord = QVector3D(10, 0, 0);
+    ptr->addDisplay(displayCoord, eFieldNormal);
     rhs = std::shared_ptr<RhsFunction>(ptr);
     mainWidget = new QWidget();
     mainLayout = new QHBoxLayout();
@@ -66,7 +67,7 @@ void MainWindow::init() {
     for (auto field: mFields){
         mFieldsCoords.push_back(QVector3D(field->direction.x, field->direction.y, field->direction.z));
     }
-    modifier = new SceneModifier(rootEntity, eFieldCoord, mFieldsCoords, displayCoord);
+    modifier = new SceneModifier(rootEntity, eFieldNormal, mFieldsCoords, displayCoord);
     view->setRootEntity(rootEntity);
 }
 

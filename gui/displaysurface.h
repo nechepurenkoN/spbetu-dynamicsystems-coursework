@@ -9,7 +9,7 @@ class DisplaySurface: public Plane
 {
     Q_OBJECT
 public:
-    DisplaySurface(Qt3DCore::QEntity* rootEntity, QVector3D normale, QVector3D translation, int color);
+    DisplaySurface(Qt3DCore::QEntity* rootEntity, QVector3D normal, QVector3D translation, int color);
 };
 
 #endif // DISPLAYSURFACE_H
