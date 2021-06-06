@@ -18,13 +18,19 @@ MainWindow::MainWindow(QWidget *parent)
     rhs = std::shared_ptr<RhsFunction>(ptr);
     mainWidget = new QWidget();
     mainLayout = new QHBoxLayout();
+    toolsWidget = new QWidget();
     toolsLayout = new QVBoxLayout();
+    verticalFieldValue = new QLabel();
+    horizontalFieldValue = new QLabel();
+    verticalFieldLabel = new QLabel("Up-Down Field:");
+    horizontalFieldLabel = new QLabel("Left-Right Field:");
+    defaultViewButton = new QPushButton("Default View");
     view = new Qt3DExtras::Qt3DWindow();
     container = QWidget::createWindowContainer(view);
     session = Session();
     init();
     generateParticles();
-    session.start(particles, rhs);
+    session.start(particles, rhs, verticalFieldValue, horizontalFieldValue);
 
 }
 
@@ -35,9 +41,25 @@ void MainWindow::init() {
     view->defaultFrameGraph()->setClearColor(QColor(QRgb(0xaaaaaa)));
     mainWidget->setLayout(mainLayout);
     mainLayout->addWidget(container);
-    mainLayout->addLayout(toolsLayout);
+    toolsWidget->setLayout(toolsLayout);
+    toolsWidget->setMaximumWidth(200);
+    mainLayout->addWidget(toolsWidget);
 
     toolsLayout->setAlignment(Qt::AlignTop);
+
+    QFont fontLabel("Arial", 15, QFont::Bold);
+    QFont fontValue("Arial", 15);
+    verticalFieldLabel->setFont(fontLabel);
+    verticalFieldValue->setFont(fontValue);
+    horizontalFieldLabel->setFont(fontLabel);
+    horizontalFieldValue->setFont(fontValue);
+
+    toolsLayout->addWidget(verticalFieldLabel);
+    toolsLayout->addWidget(verticalFieldValue);
+    toolsLayout->addWidget(horizontalFieldLabel);
+    toolsLayout->addWidget(horizontalFieldValue);
+    defaultViewButton->setFocusPolicy(Qt::NoFocus);
+    toolsLayout->addWidget(defaultViewButton);
 
     rootEntity = new Qt3DCore::QEntity();
 
@@ -69,6 +91,9 @@ void MainWindow::init() {
     }
     modifier = new SceneModifier(rootEntity, eFieldNormal, mFieldsCoords, displayCoord);
     view->setRootEntity(rootEntity);
+
+    connect(defaultViewButton, &QPushButton::clicked, this, &MainWindow::setDefaultView);
+
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
@@ -79,7 +104,12 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 MainWindow::~MainWindow() {
     delete mainLayout;
     delete mainWidget;
+    delete toolsWidget;
     delete toolsLayout;
+    delete verticalFieldLabel;
+    delete verticalFieldValue;
+    delete horizontalFieldLabel;
+    delete horizontalFieldValue;
     delete view;
     delete container;
     delete rootEntity;
@@ -100,5 +130,12 @@ void MainWindow::generateParticles() {
         modifier->addSphere(s);
         particles.push_back(p);
     }
+}
+
+void MainWindow::setDefaultView()
+{
+    cameraEntity->setPosition(QVector3D(-20.0f, 0.0f, 0.0f));
+    cameraEntity->setUpVector(QVector3D(0, 1, 0));
+    cameraEntity->setViewCenter(QVector3D(0, 0, 0));
 }
 
