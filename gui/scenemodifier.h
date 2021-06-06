@@ -21,7 +21,7 @@ class SceneModifier : public QObject
     Q_OBJECT
 
 public:
-    explicit SceneModifier(Qt3DCore::QEntity *rootEntity, QVector3D efc, QVector3D mfc);
+    explicit SceneModifier(Qt3DCore::QEntity *rootEntity, QVector3D efc, std::vector<QVector3D> mfc);
     void addSphere(Sphere *sphere);
     ~SceneModifier();
 
@@ -32,7 +32,7 @@ private:
     Qt3DCore::QEntity *rootEntity;
     std::vector<Sphere*> spheres;
     Plane* ePlane;
-    Plane* mPlane;
+    std::vector<Plane*> mPlanes;
 };
 
 #endif // SCENEMODIFIER_H
