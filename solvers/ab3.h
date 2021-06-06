@@ -19,7 +19,7 @@ protected:
 
 public:
     AB3(const std::shared_ptr<RhsFunction> &rhsFunction, const std::function<void(State)> &onUpdateConsumer,
-        double h, int maxIterations);
+        double h, long long maxIterations);
 
     ~AB3() noexcept;
 };

@@ -13,7 +13,7 @@ protected:
 
 public:
     RK4Solver(const std::shared_ptr<RhsFunction> &rhsFunction, const std::function<void(State)> &onUpdateConsumer,
-              double h, int maxIterations);
+              double h, long long maxIterations);
 };
 
 

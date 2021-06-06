@@ -20,14 +20,14 @@ protected:
     std::shared_ptr<RhsFunction> rhsFunction;
     std::function<void(State)> onUpdateConsumer;
     double h;
-    int maxIterations = 0;
+    long long maxIterations = 0;
     virtual State step() = 0;
 
 public:
     AbstractSolver(
             std::shared_ptr<RhsFunction> rhsFunction,
             std::function<void(State)> onUpdateConsumer_,
-            double h_ = 0.01, int maxIterations_ = 10000);
+            double h_ = 0.01, long long maxIterations_ = 10000);
 
 
     void solve(State initialState) override;

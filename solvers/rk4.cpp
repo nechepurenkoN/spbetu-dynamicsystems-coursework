@@ -4,7 +4,7 @@
 
 #include "rk4.h"
 RK4Solver::RK4Solver(const std::shared_ptr<RhsFunction> &rhsFunction,
-                     const std::function<void(State)> &onUpdateConsumer, double h, int maxIterations) : AbstractSolver(
+                     const std::function<void(State)> &onUpdateConsumer, double h, long long maxIterations) : AbstractSolver(
         rhsFunction, onUpdateConsumer, h, maxIterations) {}
 
 State RK4Solver::step() {

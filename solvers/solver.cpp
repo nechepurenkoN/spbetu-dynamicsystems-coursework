@@ -5,7 +5,7 @@
 #include "solver.h"
 AbstractSolver::AbstractSolver(std::shared_ptr<RhsFunction> rhsFunction_,
                                std::function<void(State)> onUpdateConsumer_,
-                               double h_, int maxIterations_)
+                               double h_, long long maxIterations_)
         :
         rhsFunction(rhsFunction_),
         onUpdateConsumer(std::move(onUpdateConsumer_)),
@@ -14,7 +14,7 @@ AbstractSolver::AbstractSolver(std::shared_ptr<RhsFunction> rhsFunction_,
 
 void AbstractSolver::solve(State initialState) {
     previousStates.push_back(initialState);
-    for (int iteration = 0; iteration < maxIterations; iteration++) {
+    for (long long iteration = 0; iteration < maxIterations; iteration++) {
         onUpdateConsumer(previousStates.back());
         State nextState = step();
         previousStates.push_back(nextState);

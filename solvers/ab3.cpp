@@ -6,7 +6,7 @@
 #include "euler.h"
 
 AB3::AB3(const std::shared_ptr<RhsFunction> &rhsFunction,
-         const std::function<void(State)> &onUpdateConsumer, double h, int maxIterations) : AbstractSolver(
+         const std::function<void(State)> &onUpdateConsumer, double h, long long maxIterations) : AbstractSolver(
         rhsFunction, onUpdateConsumer, h, maxIterations) {
     oneStepSolver = new EulerSolver(rhsFunction, [this](State state) -> void {
         this->previousStates.push_back(state);

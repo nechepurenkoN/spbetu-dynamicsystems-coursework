@@ -13,7 +13,7 @@ public:
     EulerSolver(
             std::shared_ptr<RhsFunction> rhsFunction,
             std::function<void(State)> onUpdateConsumer_,
-            double h_ = 0.01, int maxIterations_ = 10000);
+            double h_ = 0.01, long long maxIterations_ = 10000);
 };
 
 
