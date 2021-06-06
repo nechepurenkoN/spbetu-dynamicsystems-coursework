@@ -8,11 +8,11 @@ Plane::Plane(Qt3DCore::QEntity* rootEntity, double x, double y, double z, int co
     mesh->setWidth(2);
     mesh->setHeight(2);
     transform_front = new Qt3DCore::QTransform();
-    transform_front->setScale(5.0f);
+    transform_front->setScale(2.0f);
     transform_front->setRotation(QQuaternion::rotationTo(QVector3D(0, 1, 0), QVector3D(x, y, z)));
 
     transform_back = new Qt3DCore::QTransform();
-    transform_back->setScale(5.0f);
+    transform_back->setScale(2.0f);
     transform_back->setRotation(QQuaternion::rotationTo(QVector3D(0, 1, 0) ,QVector3D(-x, -y, -z)));
 
     material = new Qt3DExtras::QPhongAlphaMaterial();

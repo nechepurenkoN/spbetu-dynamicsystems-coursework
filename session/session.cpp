@@ -5,21 +5,32 @@
 #include "session.h"
 
 void solverRunnable(std::vector<Particle*> particles, std::shared_ptr<RhsFunction> ptr) {
+    double d1 = 0.2;
+    double d2 = 0.2;
+    EMFieldMovingFunction *rhs = dynamic_cast<EMFieldMovingFunction *>(ptr.get());
+    double mFieldValue1 = rhs->getMagneticFields()[1]->value;
+    int i = 0;
     for (auto &particle : particles) {
-        EMFieldMovingFunction *rhs = dynamic_cast<EMFieldMovingFunction *>(ptr.get());
-        auto s = std::shared_ptr<Solver>(new RK4Solver(
+        auto s = std::shared_ptr<Solver>(new AB3(
                 ptr,
                 [&particle](State state) -> void {
                     particle->setX(state.coordinate.x);
                     particle->setY(state.coordinate.y);
                     particle->setZ(state.coordinate.z);
-                    std::this_thread::sleep_for(std::chrono::milliseconds(10));
-                }, 0.01, 10000
+                    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+                }, 0.001, 10000
         ));
         State state(Point3D(particle->getX(), particle->getY(), particle->getZ()), Point3D(1, 0, 0), 1);
         try {
             s->solve(state);
         } catch (int &e){}
+        rhs->getMagneticFields()[1]->value += d1;
+        i++;
+        if (i >= 11){
+            rhs->getMagneticFields()[1]->value = mFieldValue1;
+            rhs->getMagneticFields()[0]->value += d2;
+            i = 0;
+        }
     }
 
 }

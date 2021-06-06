@@ -5,9 +5,7 @@
 #include "rhsfunction.h"
 
 bool EMFieldMovingFunction::terminatePredicate(Point3D &coord) {
-    return displayNormal.x*(coord.x - displayTranspose.x) + \
-            displayNormal.y*(coord.y - displayTranspose.y) + \
-            displayNormal.z*(coord.z - displayTranspose.z) > 0.;
+    return coord.x * coord.x + coord.y * coord.y + coord.z * coord.z > 100;
 }
 
 void EMFieldMovingFunction::addDisplay(QVector3D trans, QVector3D normal)

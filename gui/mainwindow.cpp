@@ -6,8 +6,8 @@
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent) {
     eFieldNormal = QVector3D(1, 0, 0);
-    mFields.push_back(new UniformField(1, Point3D(0, 0, 1)));
-    mFields.push_back(new UniformField(1, Point3D(0, 1, 0)));
+    mFields.push_back(new UniformField(-1, Point3D(0, 0, 1)));
+    mFields.push_back(new UniformField(-1, Point3D(0, 1, 0)));
     displayCoord = QVector3D(10, 0, 0);
     auto ptr = new EMFieldMovingFunction();
     ptr->addElectricField(new UniformField(10, Point3D(eFieldNormal.x(), eFieldNormal.y(), eFieldNormal.z())));
@@ -45,7 +45,7 @@ void MainWindow::init() {
     cameraEntity = view->camera();
 
     cameraEntity->lens()->setPerspectiveProjection(45.0f, 16.0f / 9.0f, 0.1f, 1000.0f);
-    cameraEntity->setPosition(QVector3D(11.0f, 5.0f, 20.0f));
+    cameraEntity->setPosition(QVector3D(-20.0f, 5.0f, 10.0f));
     cameraEntity->setUpVector(QVector3D(0, 1, 0));
     cameraEntity->setViewCenter(QVector3D(0, 0, 0));
 
@@ -55,7 +55,7 @@ void MainWindow::init() {
     light->setIntensity(1);
     lightEntity->addComponent(light);
     Qt3DCore::QTransform *lightTransform = new Qt3DCore::QTransform(lightEntity);
-    lightTransform->setTranslation(QVector3D(20.0f, 20.0f, 20.0f));
+    lightTransform->setTranslation(QVector3D(-20.0f, 20.0f, 20.0f));
     lightEntity->addComponent(lightTransform);
 
     // For camera controls
@@ -94,7 +94,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::generateParticles() {
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 121; i++) {
         auto *p = new Particle(0, 0, 0);
         auto *s = new Sphere(rootEntity, p);
         modifier->addSphere(s);
