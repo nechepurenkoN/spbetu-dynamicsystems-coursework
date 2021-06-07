@@ -5,7 +5,7 @@ Sphere::Sphere(Qt3DCore::QEntity* rootEntity, Particle *particle): particle(part
     mesh = new Qt3DExtras::QSphereMesh();
     mesh->setRings(10);
     mesh->setSlices(10);
-    mesh->setRadius(2);
+    mesh->setRadius(1.7);
     transform = new Qt3DCore::QTransform();
     transform->setScale(0.2f);
     transform->setTranslation(QVector3D(particle->getX(), particle->getY(), particle->getZ()));
