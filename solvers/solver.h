@@ -4,6 +4,7 @@
 
 #ifndef SPBETU_DYNAMICSYSTEMS_COURSEWORK_SOLVER_H
 #define SPBETU_DYNAMICSYSTEMS_COURSEWORK_SOLVER_H
+
 #include <memory>
 #include <functional>
 #include <deque>
@@ -12,6 +13,8 @@
 class Solver {
 public:
     virtual void solve(State initialState) = 0;
+
+    virtual ~Solver() {}
 };
 
 class AbstractSolver : public Solver {
@@ -21,6 +24,7 @@ protected:
     std::function<void(State)> onUpdateConsumer;
     double h;
     long long maxIterations = 0;
+
     virtual State step() = 0;
 
 public:
@@ -31,6 +35,8 @@ public:
 
 
     void solve(State initialState) override;
+
+    ~AbstractSolver() override = default;
 };
 
 #endif //SPBETU_DYNAMICSYSTEMS_COURSEWORK_SOLVER_H

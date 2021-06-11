@@ -16,5 +16,16 @@ public:
               double h, long long maxIterations);
 };
 
+class Ralston3Solver : public AbstractSolver {
+protected:
+    State step() override;
+
+public:
+    Ralston3Solver(const std::shared_ptr<RhsFunction> &rhsFunction, const std::function<void(State)> &onUpdateConsumer,
+              double h, long long maxIterations);
+
+    ~Ralston3Solver();
+};
+
 
 #endif //SPBETU_DYNAMICSYSTEMS_COURSEWORK_RK4_H

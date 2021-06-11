@@ -3,12 +3,12 @@
 //
 
 #include "ab3.h"
-#include "euler.h"
+#include "rk4.h"
 
 AB3::AB3(const std::shared_ptr<RhsFunction> &rhsFunction,
          const std::function<void(State)> &onUpdateConsumer, double h, long long maxIterations) : AbstractSolver(
         rhsFunction, onUpdateConsumer, h, maxIterations) {
-    oneStepSolver = new EulerSolver(rhsFunction, [this](State state) -> void {
+    oneStepSolver = new Ralston3Solver(rhsFunction, [this](State state) -> void {
         this->previousStates.push_back(state);
     }, h, 2);
     coefficients = new double[3]{5 / 12., -4 / 3., 23 / 12.};
