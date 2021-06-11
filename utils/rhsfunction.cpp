@@ -3,6 +3,7 @@
 //
 
 #include "rhsfunction.h"
+#include "cmath"
 
 bool EMFieldMovingFunction::terminatePredicate(Point3D &coord) {
     return coord.x * coord.x + coord.y * coord.y + coord.z * coord.z > 100;
@@ -20,9 +21,13 @@ State EMFieldMovingFunction::apply(State state) {
         dVelocity = dVelocity + electricField->value * electricField->direction;
     }
 
+    Point3D magneticAccumulator(0,0,0);
     for (auto &magneticField : magneticFields) {
-        dVelocity = dVelocity + magneticField->value * state.velocity.cross(magneticField->direction);
+        magneticAccumulator = magneticAccumulator + (magneticField->value * magneticField->direction);
     }
+    double magneticValue = std::sqrt(magneticAccumulator.x*magneticAccumulator.x + magneticAccumulator.y*magneticAccumulator.y + magneticAccumulator.z * magneticAccumulator.z);
+    magneticAccumulator = (1/magneticValue) * magneticAccumulator;
+    dVelocity = dVelocity + magneticValue * state.velocity.cross(magneticAccumulator);
 
     if (terminatePredicate(state.coordinate))
         throw 1;
