@@ -16,6 +16,10 @@ public:
     Point3D(double x = 0., double y = 0., double z = 0.);
 
     Point3D cross(const Point3D &);
+
+    double absoluteValue();
+
+    Point3D normalize();
 };
 
 Point3D operator*(double scalar, const Point3D &rhs);
@@ -27,5 +31,6 @@ Point3D operator+(const Point3D &lhs, const Point3D &rhs);
 std::ostream &operator<<(std::ostream &os, const Point3D &point);
 
 bool operator==(const Point3D &lhs, const Point3D &rhs);
+
 
 #endif //SPBETU_DYNAMICSYSTEMS_COURSEWORK_POINT3D_H
