@@ -44,5 +44,5 @@ double Point3D::absoluteValue() {
 }
 
 Point3D Point3D::normalize() {
-    return absoluteValue() * Point3D(x, y, z);
+    return (1 / absoluteValue()) * Point3D(x, y, z);
 }
