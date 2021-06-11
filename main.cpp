@@ -1,13 +1,14 @@
-#include "tests/runner.h"
+#include "tests/energyequilibrium.h"
+#include "tests/trajectory.h"
 #include "gui/mainwindow.h"
 
 #include <QApplication>
-#include <QLocale>
 
-int main(int argc, char *argv[])
-{
-    Runner r;
-    r.run();
+int main(int argc, char *argv[]) {
+//    Trajectory t;
+//    t.run();
+//    energyequilibrium e;
+//    e.run();
     QApplication a(argc, argv);
 
     MainWindow w;

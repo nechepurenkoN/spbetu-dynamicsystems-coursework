@@ -46,6 +46,8 @@ add_executable(spbetu_dynamicsystems_coursework
         tests/runner.h
         tests/energyequilibrium.cpp
         tests/energyequilibrium.h
+        tests/trajectory.cpp
+        tests/trajectory.h
         main.cpp)
 target_link_libraries(spbetu_dynamicsystems_coursework Qt5::Core)
 target_link_libraries(spbetu_dynamicsystems_coursework Qt5::Widgets)
