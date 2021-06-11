@@ -54,6 +54,9 @@ void MainWindow::init() {
     horizontalFieldLabel->setFont(fontLabel);
     horizontalFieldValue->setFont(fontValue);
 
+    verticalFieldValue->setText(QString::number(mFields[0]->value));
+    horizontalFieldValue->setText(QString::number(mFields[0]->value));
+
     toolsLayout->addWidget(verticalFieldLabel);
     toolsLayout->addWidget(verticalFieldValue);
     toolsLayout->addWidget(horizontalFieldLabel);
