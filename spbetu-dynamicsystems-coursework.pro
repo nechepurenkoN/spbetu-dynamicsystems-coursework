@@ -21,11 +21,13 @@ SOURCES += \
     solvers/euler.cpp \
     solvers/rk4.cpp \
     solvers/solver.cpp \
+    tests/energyequilibrium.cpp \
+    tests/runner.cpp \
+    tests/trajectory.cpp \
     utils/rhsfunction.cpp \
     utils/particle.cpp \
     utils/point3d.cpp \
-    utils/state.cpp \
-    tests/runner.cpp
+    utils/state.cpp
 
 HEADERS += \
     gui/displaysurface.h \
@@ -39,11 +41,13 @@ HEADERS += \
     solvers/euler.h \
     solvers/rk4.h \
     solvers/solver.h \
+    tests/energyequilibrium.h \
+    tests/runner.h \
+    tests/trajectory.h \
     utils/rhsfunction.h \
     utils/particle.h \
     utils/point3d.h \
-    utils/state.h \
-    tests/runner.h
+    utils/state.h
 
 CONFIG += lrelease
 CONFIG += embed_translations
