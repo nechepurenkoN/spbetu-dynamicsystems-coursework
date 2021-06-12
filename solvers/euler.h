@@ -8,7 +8,7 @@
 
 class EulerSolver : public AbstractSolver {
 protected:
-    State step() override;
+    State step(double time) override;
 public:
     EulerSolver(
             std::shared_ptr<RhsFunction> rhsFunction,

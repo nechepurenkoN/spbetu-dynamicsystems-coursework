@@ -15,7 +15,7 @@ private:
     void prepareStates();
 
 protected:
-    State step() override;
+    State step(double time) override;
 
 public:
     AB3(const std::shared_ptr<RhsFunction> &rhsFunction, const std::function<void(State)> &onUpdateConsumer,

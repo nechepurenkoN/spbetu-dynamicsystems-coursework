@@ -25,7 +25,7 @@ protected:
     double h;
     long long maxIterations = 0;
 
-    virtual State step() = 0;
+    virtual State step(double time) = 0;
 
 public:
     AbstractSolver(

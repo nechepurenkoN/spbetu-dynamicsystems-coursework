@@ -14,7 +14,7 @@ Ralston3Solver::Ralston3Solver(const std::shared_ptr<RhsFunction> &rhsFunction,
         : AbstractSolver(
         rhsFunction, onUpdateConsumer, h, maxIterations) {}
 
-State RK4Solver::step() {
+State RK4Solver::step(double time) {
     State currentState = previousStates.back();
     State k1 = rhsFunction->apply(currentState);
     State k2 = rhsFunction->apply(currentState + h / 2. * k1);
@@ -23,7 +23,7 @@ State RK4Solver::step() {
     return currentState + h * (1 / 6. * k1 + 1 / 3. * k2 + 1 / 3. * k3 + 1 / 6. * k4);
 }
 
-State Ralston3Solver::step() {
+State Ralston3Solver::step(double time) {
     State currentState = previousStates.back();
     State k1 = rhsFunction->apply(currentState);
     State k2 = rhsFunction->apply(currentState + h / 2. * k1);

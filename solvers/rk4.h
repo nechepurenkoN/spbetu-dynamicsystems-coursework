@@ -9,7 +9,7 @@
 
 class RK4Solver : public AbstractSolver {
 protected:
-    State step() override;
+    State step(double time) override;
 
 public:
     RK4Solver(const std::shared_ptr<RhsFunction> &rhsFunction, const std::function<void(State)> &onUpdateConsumer,
@@ -18,7 +18,7 @@ public:
 
 class Ralston3Solver : public AbstractSolver {
 protected:
-    State step() override;
+    State step(double time) override;
 
 public:
     Ralston3Solver(const std::shared_ptr<RhsFunction> &rhsFunction, const std::function<void(State)> &onUpdateConsumer,

@@ -8,7 +8,7 @@ EulerSolver::EulerSolver(std::shared_ptr<RhsFunction> rhsFunction, std::function
                          double h_, long long maxIterations_) : AbstractSolver(rhsFunction, onUpdateConsumer_, h_,
                                                                          maxIterations_) {}
 
-State EulerSolver::step() {
+State EulerSolver::step(double time) {
     State currentState = previousStates.back();
     State nextState = currentState + h * rhsFunction->apply(currentState);
     return nextState;

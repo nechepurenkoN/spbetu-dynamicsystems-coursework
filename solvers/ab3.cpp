@@ -10,11 +10,12 @@ AB3::AB3(const std::shared_ptr<RhsFunction> &rhsFunction,
         rhsFunction, onUpdateConsumer, h, maxIterations) {
     oneStepSolver = new Ralston3Solver(rhsFunction, [this](State state) -> void {
         this->previousStates.push_back(state);
+        this->onUpdateConsumer(state);
     }, h, 2);
     coefficients = new double[3]{5 / 12., -4 / 3., 23 / 12.};
 }
 
-State AB3::step() {
+State AB3::step(double time) {
     if (previousStates.size() < 3) {
         prepareStates();
     }
