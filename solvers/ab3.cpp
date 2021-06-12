@@ -11,7 +11,7 @@ AB3::AB3(const std::shared_ptr<RhsFunction> &rhsFunction,
     oneStepSolver = new Ralston3Solver(rhsFunction, [this](State state) -> void {
         this->previousStates.push_back(state);
         this->onUpdateConsumer(state);
-    }, h, 2);
+    }, h, 3);
     coefficients = new double[3]{5 / 12., -4 / 3., 23 / 12.};
 }
 
@@ -33,6 +33,7 @@ State AB3::step(double time) {
 void AB3::prepareStates() {
     State currentState = previousStates.back();
     oneStepSolver->solve(currentState);
+    previousStates.pop_front(); // inner method push initial state and it was added twice
 }
 
 AB3::~AB3() noexcept {
