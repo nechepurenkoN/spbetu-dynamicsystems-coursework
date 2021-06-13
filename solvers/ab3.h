@@ -9,7 +9,6 @@
 
 class AB3 : public AbstractSolver {
 private:
-    Solver *oneStepSolver;
     double *coefficients;
 
     void prepareStates();
@@ -21,7 +20,7 @@ public:
     AB3(const std::shared_ptr<RhsFunction> &rhsFunction, const std::function<void(State)> &onUpdateConsumer,
         double h, long long maxIterations);
 
-    ~AB3() noexcept;
+    ~AB3() noexcept override;
 };
 
 

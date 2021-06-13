@@ -8,10 +8,6 @@
 AB3::AB3(const std::shared_ptr<RhsFunction> &rhsFunction,
          const std::function<void(State)> &onUpdateConsumer, double h, long long maxIterations) : AbstractSolver(
         rhsFunction, onUpdateConsumer, h, maxIterations) {
-    oneStepSolver = new Ralston3Solver(rhsFunction, [this](State state) -> void {
-        this->previousStates.push_back(state);
-        this->onUpdateConsumer(state);
-    }, h, 3);
     coefficients = new double[3]{5 / 12., -4 / 3., 23 / 12.};
 }
 
@@ -31,12 +27,20 @@ State AB3::step(double time) {
 }
 
 void AB3::prepareStates() {
+    std::deque<State> oneStepStates;
+    Solver *oneStepSolver = new Ralston3Solver(rhsFunction, [&oneStepStates](State state) -> void {
+        oneStepStates.push_back(state);
+    }, h, 3);
     State currentState = previousStates.back();
     oneStepSolver->solve(currentState);
-    previousStates.pop_front(); // inner method push initial state and it was added twice
+    oneStepStates.pop_front();
+    for (auto &s : oneStepStates) {
+        onUpdateConsumer(s);
+        previousStates.push_back(s);
+    }
+    delete oneStepSolver;
 }
 
 AB3::~AB3() noexcept {
-    delete oneStepSolver;
     delete coefficients;
 }
